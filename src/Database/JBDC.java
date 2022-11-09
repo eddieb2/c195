@@ -26,6 +26,7 @@ public abstract class JBDC {
         catch(Exception e)
         {
             System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -37,6 +38,7 @@ public abstract class JBDC {
         catch(Exception e)
         {
             System.out.println("Error:" + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
