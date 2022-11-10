@@ -1,4 +1,4 @@
 package Model;
 
-public class Customers {
+public class Appointments {
 }

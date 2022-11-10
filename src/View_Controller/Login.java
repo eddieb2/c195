@@ -18,14 +18,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class LoginScreen implements Initializable {
+public class Login implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private Button loginButton;
     @FXML private Label locationLabel;
     @FXML private TextField userNameField;
     @FXML private TextField passwordField;
     private static boolean authenticationStatus = false;
-
 
     public static boolean getAuthStatus() {
         return authenticationStatus;
@@ -50,11 +49,12 @@ public class LoginScreen implements Initializable {
     * */
     private void redirect() throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View_Controller/MainScreen.fxml"));
+        loader.setLocation(getClass().getResource("/View_Controller/Dashboard.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) loginButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Dashboard");
         stage.show();
     }
 
@@ -112,11 +112,12 @@ public class LoginScreen implements Initializable {
 EXTRAS:
 * Add password encryption
 * Improve input validation
+* Change the login button text to "login" if necessary.
 * */
 
 
 /* Opens new window
-*         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("MainScreen.fxml")));
+*         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Customers");

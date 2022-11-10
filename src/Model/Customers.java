@@ -1,2 +1,4 @@
-package Model;public class Customers {
+package Model;
+
+public class Customers {
 }

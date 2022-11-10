@@ -3,25 +3,36 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import DAO.DBConnection;
 
-import helper.JBDC;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        // JBDC connection test
-        JBDC.openConnection();
-        JBDC.closeConnection();
+        try{
+            ResourceBundle rb = ResourceBundle.getBundle("Lang/Nat", Locale.getDefault());
 
-        Parent root = FXMLLoader.load(getClass().getResource("view/mainScreen.fxml"));
-        primaryStage.setTitle("Main Screen");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
+            // For testing individual views -- switch back to login form when project complete
+//            Parent root = FXMLLoader.load-(Objects.requireNonNull(getClass().getResource("View_Controller/Login.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("View_Controller/Dashboard.fxml")));
+
+            primaryStage.setTitle(rb.getString("Login"));
+            primaryStage.setScene(new Scene(root));
+            primaryStage.setResizable(false);
+            primaryStage.show();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 
     public static void main(String[] args) {
+        DBConnection.openConnection();
         launch(args);
+        DBConnection.closeConnection();
     }
 }
