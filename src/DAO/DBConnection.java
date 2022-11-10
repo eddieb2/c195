@@ -1,4 +1,4 @@
-package helper;
+package Utils;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +21,7 @@ public abstract class JBDC {
         try {
             Class.forName(driver); // Locate Driver
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // Reference Connection object
-            System.out.println("Connection successful!");
+            System.out.println("Connection successful!\n");
         }
         catch(Exception e)
         {
