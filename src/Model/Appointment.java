@@ -18,7 +18,7 @@ Customer_ID INT(10) (FK)
 User_ID INT(10) (FK)
 Contact_ID INT(10) (FK)
 */
-public class Appointments {
+public class Appointment {
     private Integer appointmentId;
     private String title;
     private String description;
@@ -26,13 +26,15 @@ public class Appointments {
     private String type;
     private Date start;
     private Date end;
+//    private Date createDate;
 //    private String createdBy;
+//    private Date lastUpdate;
 //    private String lastUpdatedBy;
     private Integer customerId;
     private Integer userId;
     private Integer contactId;
 
-    public Appointments(Integer appointmentId, String title, String description, String location, String type, Date start, Date end, Integer customerId, Integer userId, Integer contactId) {
+    public Appointment(Integer appointmentId, String title, String description, String location, String type, Date start, Date end, Integer customerId, Integer userId, Integer contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
