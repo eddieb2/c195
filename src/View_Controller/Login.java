@@ -1,6 +1,6 @@
 package View_Controller;
 
-import DAO.UserAccess;
+import DAO.UserQueries;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -74,7 +74,7 @@ public class Login implements Initializable {
             loginSuccess.setContentText(rb.getString("Success"));
             loginFailed.setContentText(rb.getString("Failed"));
 
-            authenticationStatus = UserAccess.authenticateUser(username,password);
+            authenticationStatus = UserQueries.authenticateUser(username,password);
 
             if (authenticationStatus) {
                 redirect();
