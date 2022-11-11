@@ -1,2 +1,4 @@
-package View_Controller;public class Appointments {
+package View_Controller;
+
+public class Appointments {
 }
