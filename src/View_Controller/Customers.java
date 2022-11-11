@@ -41,14 +41,13 @@ public class Customers implements Initializable {
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
 
-
-//        ObservableList<Customer> customers = FXCollections.observableArrayList(new Customer(3, "Eddie", "test address", "15151", "111-111-1111", 1));
-
+        // Queries the database and saves all the customers to an observable list.
         ObservableList<Customer> customers = null;
+
         try {
             customers = CustomerQueries.getAllCustomers();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
 
         customersTable.setItems(customers);

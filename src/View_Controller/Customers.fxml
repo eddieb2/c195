@@ -14,10 +14,10 @@
             <TableColumn fx:id="addressCol" prefWidth="75.0" text="Address" />
             <TableColumn fx:id="postalCodeCol" prefWidth="75.0" text="Postal Code" />
             <TableColumn fx:id="phoneCol" prefWidth="75.0" text="Phone" />
-            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />
-            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />
-            <TableColumn fx:id="lastUpdatedCol" prefWidth="75.0" text="Last Update" />
-            <TableColumn fx:id="lastUpdatedByCol" prefWidth="75.0" text="Last Updated By" />
+<!--            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />-->
+<!--            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />-->
+<!--            <TableColumn fx:id="lastUpdatedCol" prefWidth="75.0" text="Last Update" />-->
+<!--            <TableColumn fx:id="lastUpdatedByCol" prefWidth="75.0" text="Last Updated By" />-->
             <TableColumn fx:id="divisionIdCol" prefWidth="75.0" text="Division ID" />
          </columns>
          <columnResizePolicy>
