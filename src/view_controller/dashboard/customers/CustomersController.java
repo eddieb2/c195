@@ -1,7 +1,7 @@
 package view_controller.dashboard.customers;
 
-import dao.CustomerQueries;
-import model.Customer;
+import DAO.CustomerQueries;
+import src.model.Customer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +45,7 @@ public class CustomersController implements Initializable {
             customers = CustomerQueries.getAllCustomers();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
+            System.out.println(throwable);
         }
 
         customersTable.setItems(customers);

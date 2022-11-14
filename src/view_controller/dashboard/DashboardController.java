@@ -1,20 +1,18 @@
 package view_controller.dashboard;
 
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
-import view_controller.dashboard.appointments.AppointmentsController;
-import view_controller.dashboard.customers.CustomersController;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import view_controller.dashboard.appointments.AppointmentsController;
+import view_controller.dashboard.customers.CustomersController;
 
 import java.io.IOException;
-import java.util.Objects;
 
 // YT video explaining how to link 2 fxml files into one
 // https://www.youtube.com/watch?v=osIRfgHTfyg

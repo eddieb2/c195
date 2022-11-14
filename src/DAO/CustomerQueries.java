@@ -1,11 +1,9 @@
 package DAO;
 
-import Model.Customer;
-import View_Controller.Customers;
+import src.model.Customer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;

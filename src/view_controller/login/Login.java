@@ -1,6 +1,6 @@
 package view_controller.login;
 
-import dao.UserQueries;
+import DAO.UserQueries;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;

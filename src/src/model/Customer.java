@@ -1,4 +1,4 @@
-package Model;
+package src.model;
 
 public class Customer {
 

@@ -18,14 +18,14 @@ public class Main extends Application {
 
             // For testing individual views -- switch back to login form when project complete
 //            Parent root = FXMLLoader.load-(Objects.requireNonNull(getClass().getResource("View_Controller/Login.fxml")));
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("View_Controller/Dashboard.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view_controller/dashboard/dashboard.fxml")));
 
             primaryStage.setTitle(rb.getString("Login"));
             primaryStage.setScene(new Scene(root));
             primaryStage.setResizable(false);
             primaryStage.show();
         } catch (Exception e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 

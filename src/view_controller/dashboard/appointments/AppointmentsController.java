@@ -1,7 +1,7 @@
 package view_controller.dashboard.appointments;
 
-import dao.AppointmentQueries;
-import model.Appointment;
+import DAO.AppointmentQueries;
+import src.model.Appointment;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,6 +50,7 @@ public class AppointmentsController implements Initializable {
             appointments = AppointmentQueries.getAllAppointments();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
+            System.out.println(throwable);
         }
 
         appointmentsTable.setItems(appointments);
