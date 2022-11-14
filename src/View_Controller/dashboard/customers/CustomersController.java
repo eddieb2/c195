@@ -1,10 +1,7 @@
-package View_Controller;
+package view_controller.dashboard.customers;
 
-import DAO.CustomerQueries;
-import DAO.UserQueries;
-import Model.Customer;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
+import dao.CustomerQueries;
+import model.Customer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +14,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class Customers implements Initializable {
+public class CustomersController implements Initializable {
 
     @FXML private AnchorPane customersTab;
     @FXML private TableView<Customer> customersTable;

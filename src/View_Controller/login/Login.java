@@ -1,6 +1,6 @@
-package View_Controller;
+package view_controller.login;
 
-import DAO.UserQueries;
+import dao.UserQueries;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -49,12 +49,12 @@ public class Login implements Initializable {
     * */
     private void redirect() throws IOException {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View_Controller/Dashboard.fxml"));
+        loader.setLocation(getClass().getResource("/view_controller/dashboard/dashboard.fxml"));
         Parent root = loader.load();
         Stage stage = (Stage) loginButton.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setTitle("Dashboard");
+        stage.setTitle("view_controller/dashboard");
         stage.show();
     }
 
@@ -63,7 +63,7 @@ public class Login implements Initializable {
     * */
     public void onSubmit() {
         try {
-            ResourceBundle rb = ResourceBundle.getBundle("Lang/Nat", Locale.getDefault());
+            ResourceBundle rb = ResourceBundle.getBundle("lang/Nat", Locale.getDefault());
 
             String username = getUserName();
             String password = getPassword();
@@ -97,7 +97,7 @@ public class Login implements Initializable {
             // Sets the location in the UI
             locationLabel.setText(zone.toString());
 
-            rb = ResourceBundle.getBundle("Lang/Nat", Locale.getDefault());
+            rb = ResourceBundle.getBundle("lang/Nat", Locale.getDefault());
             userNameField.setPromptText(rb.getString("Username"));
             passwordField.setPromptText(rb.getString("Password"));
             loginButton.setText(rb.getString("Submit"));
@@ -116,12 +116,17 @@ EXTRAS:
 * */
 
 
-/* Opens new window
-*         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Dashboard.fxml")));
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        stage.setTitle("Customers");
+/*
+
+*
+* WORKS
+*     @FXML private Stage stage;
+    @FXML private Scene scene;
+    @FXML private Parent root;
+    *
+*         Parent root = FXMLLoader.load(getClass().getResource("customers/add_customer_form.fxml"));
+        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
-
         * */

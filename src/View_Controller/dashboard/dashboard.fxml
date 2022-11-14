@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="dashboard" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.DashboardController">
+   <children>
+      <TabPane layoutX="206.0" layoutY="71.0" prefHeight="729.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="71.0">
+        <tabs>
+          <Tab text="Customers">
+               <content>
+                  <fx:include fx:id="customersTab" source="customers/customers.fxml" />
+               </content>
+            </Tab>
+          <Tab text="Appointments">
+               <content>
+                  <fx:include fx:id="appointmentsTab" source="appointments/appointments.fxml" />
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <ButtonBar fx:id="customerButtonBar" layoutX="32.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
+         <buttons>
+            <Button fx:id="addCustomerButton" mnemonicParsing="false" onAction="#addCustomerForm" prefHeight="25.0" prefWidth="116.0" text="Add Customer" />
+            <Button fx:id="updateCustomerButton" mnemonicParsing="false" onAction="#updateCustomerForm" prefHeight="25.0" prefWidth="116.0" text="Update Customer" />
+            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Delete Customer" />
+         </buttons>
+      </ButtonBar>
+      <ButtonBar layoutX="737.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
+         <buttons>
+            <Button fx:id="addAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Add Apt." />
+            <Button fx:id="updateAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Update Apt." />
+            <Button fx:id="deleteAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Delete Apt." />
+         </buttons>
+      </ButtonBar>
+   </children>
+</AnchorPane>

@@ -1,23 +1,20 @@
-package View_Controller;
+package view_controller.dashboard.appointments;
 
-import DAO.AppointmentQueries;
-import DAO.CustomerQueries;
-import Model.Appointment;
-import Model.Customer;
+import dao.AppointmentQueries;
+import model.Appointment;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-public class Appointments implements Initializable {
+public class AppointmentsController implements Initializable {
 
 
     @FXML private TableView<Appointment> appointmentsTable;
