@@ -34,26 +34,39 @@ public class AddCustomerForm implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            // FIXME: 11/14/2022 When a specific division is shown, display the states that fall into that particular division
-
-            // Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
+            // QUERY: Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
             ObservableList<FirstLevelDivision> divisions = FirstLevelDivisionQueries.getAllDivisions();
             ObservableList<Country> countries = CountryQueries.getAllCountries();
 
             // Lists to hold the string names to display in the dropdown boxes.
-            ObservableList<String> divisionNames = FXCollections.observableArrayList();
             ObservableList<String> countryNames = FXCollections.observableArrayList();
-
-            divisions.forEach((d) -> {
-                divisionNames.add(d.getDivision());
-            });
 
             countries.forEach((d) -> {
                 countryNames.add(d.getCountry());
             });
 
-            divisionDropdown.setItems(divisionNames);
             countryDropdown.setItems(countryNames);
+
+            // Watches country selection in country dropdown box.
+            countryDropdown.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
+                String selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
+
+                // FIXME: 11/15/2022 .clear() was leaving blank space in the combobox after selecting and deselecting UK
+                // Upon new selection -- refresh divisionNames list.
+                ObservableList<String> divisionNames = FXCollections.observableArrayList();
+//                divisionNames.clear();
+
+                // Checks for all divisions that fall within the selected country and adds them to  divisionNames list for display.
+                divisions.forEach((d) -> {
+                    if (d.getCountry().equals(selectedCountry)) {
+                        divisionNames.add(d.getDivision());
+                    }
+                });
+
+                // Set division names in the divisionDropdown based on the currently selected country
+                divisionDropdown.setItems(divisionNames);
+            });
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
