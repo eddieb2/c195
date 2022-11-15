@@ -1,5 +1,8 @@
 package src.model;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 public class Customer {
 
     private Integer customerId;
@@ -9,13 +12,39 @@ public class Customer {
     private String phone;
     private Integer divisionId;
 
-    public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId) {
+    private Timestamp createDate;
+    private String createdBy;
+    private Timestamp lastUpdate;
+    private String lastUpdatedBy;
+
+
+    // Used when pulling data from the database
+    public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionId = divisionId;
+        this.createDate = createDate;
+        this.createdBy = createdBy;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    // Used for creating a new customer to add to the database
+    public Customer(String customerName, String address, String postalCode, String phone, Integer divisionId) {
+        this.customerName = customerName;
+        this.address = address;
+        this.postalCode = postalCode;
+        this.phone = phone;
+        this.divisionId = divisionId;
+
+        this.createDate = Timestamp.valueOf(LocalDateTime.now());
+        this.createdBy = "admin"; // WHOEVER IS CURRENTLY LOGGED IN --- NEEDS FIXED
+
+        this.lastUpdate = Timestamp.valueOf(LocalDateTime.now());
+        this.lastUpdatedBy = "admin";  // WHOEVER IS CURRENTLY LOGGED IN --- NEEDS FIXED
     }
 
     /**
@@ -102,5 +131,35 @@ public class Customer {
         this.divisionId = divisionId;
     }
 
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
 
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Timestamp getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Timestamp lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
+
+    public void setLastUpdatedBy(String lastUpdatedBy) {
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
 }
