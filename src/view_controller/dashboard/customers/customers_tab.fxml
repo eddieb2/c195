@@ -4,8 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane fx:id="customersTab" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.customers.CustomersController">
+<AnchorPane fx:id="customersTab" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.customers.CustomersTabController">
    <children>
       <TableView fx:id="customersTable" editable="true" prefHeight="800.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columns>
@@ -14,11 +13,11 @@
             <TableColumn fx:id="addressCol" prefWidth="75.0" text="Address" />
             <TableColumn fx:id="postalCodeCol" prefWidth="75.0" text="Postal Code" />
             <TableColumn fx:id="phoneCol" prefWidth="75.0" text="Phone" />
-<!--            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />-->
-<!--            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />-->
-<!--            <TableColumn fx:id="lastUpdatedCol" prefWidth="75.0" text="Last Update" />-->
-<!--            <TableColumn fx:id="lastUpdatedByCol" prefWidth="75.0" text="Last Updated By" />-->
             <TableColumn fx:id="divisionIdCol" prefWidth="75.0" text="Division ID" />
+            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />
+            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />
+            <TableColumn fx:id="lastUpdateCol" prefWidth="75.0" text="Last Update" />
+            <TableColumn fx:id="lastUpdatedByCol" prefWidth="75.0" text="Last Updated By" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

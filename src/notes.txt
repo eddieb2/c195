@@ -1,0 +1,11 @@
+Current problem:
+
+customer table updates
+exec add new customer
+       --> table updates fine
+
+exec delete customer
+        --> customer table wont refresh and then add customer will add
+        new customer to the database but the table wont refresh
+
+** any time that the delete button is fired the table will not refresh at all.
