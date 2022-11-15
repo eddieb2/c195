@@ -5,6 +5,10 @@ public class FirstLevelDivision {
     private String division;
     private String country;
 
+    public FirstLevelDivision(Integer divisionId) {
+        this.divisionId = divisionId;
+    }
+
     public FirstLevelDivision(Integer divisionId, String division, String country) {
         this.divisionId = divisionId;
         this.division = division;
