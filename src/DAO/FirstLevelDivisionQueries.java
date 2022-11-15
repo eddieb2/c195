@@ -28,4 +28,22 @@ public class FirstLevelDivisionQueries {
 
         return divisions;
     }
+
+    public static FirstLevelDivision getDivisionById(Integer divisionId) throws SQLException {
+        FirstLevelDivision division = new FirstLevelDivision(divisionId);
+
+        String sql = "SELECT f.division_id, f.division, c.country FROM first_level_divisions as f\n" +
+                "\tJOIN countries AS c ON f.country_id = c.country_id WHERE division_id = ?;";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1, divisionId);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            division.setDivisionId(divisionId);
+            division.setDivision(rs.getString("division"));
+            division.setCountry(rs.getString("country"));
+        }
+
+            return division;
+    }
 }
