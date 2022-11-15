@@ -65,6 +65,15 @@ public class DashboardController implements Initializable {
      * Opens the updateCustomerForm when the updateCustomerButton is fired.
      */
     @FXML private void updateCustomerForm() throws IOException {
+        Customer selectedCustomer = CustomersTabController.selectedCustomer;
+        Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
+        selectionAlert.setContentText("No customer selected.");
+
+        if (selectedCustomer == null) {
+            selectionAlert.show();
+            return;
+        }
+
         Parent root = FXMLLoader.load(getClass().getResource("customers/update_customer_form.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
