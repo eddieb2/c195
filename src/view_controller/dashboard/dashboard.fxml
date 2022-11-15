@@ -9,7 +9,7 @@
         <tabs>
           <Tab text="Customers">
                <content>
-                  <fx:include fx:id="customersTab" source="customers/customers.fxml" />
+                  <fx:include fx:id="customersTab" source="customers/customers_tab.fxml" />
                </content>
             </Tab>
           <Tab text="Appointments">
@@ -23,7 +23,7 @@
          <buttons>
             <Button fx:id="addCustomerButton" mnemonicParsing="false" onAction="#addCustomerForm" prefHeight="25.0" prefWidth="116.0" text="Add Customer" />
             <Button fx:id="updateCustomerButton" mnemonicParsing="false" onAction="#updateCustomerForm" prefHeight="25.0" prefWidth="116.0" text="Update Customer" />
-            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Delete Customer" />
+            <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="25.0" prefWidth="116.0" text="Delete Customer" />
          </buttons>
       </ButtonBar>
       <ButtonBar layoutX="737.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
