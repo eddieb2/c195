@@ -79,10 +79,17 @@ public class DashboardController implements Initializable {
     @FXML private void deleteCustomer() throws SQLException, IOException {
         Customer selectedCustomer = CustomersTabController.selectedCustomer;
         Alert deletionConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        deletionConfirmation.setContentText("Confirm selection.");
+        Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
+        selectionAlert.setContentText("No customer selected.");
+
+        if (selectedCustomer == null) {
+            selectionAlert.show();
+            return;
+        }
 
         try {
             // Prompt for confirmation
-            deletionConfirmation.setContentText("Confirm selection.");
             Optional<ButtonType> result = deletionConfirmation.showAndWait();
 
             // Delete selected customer
