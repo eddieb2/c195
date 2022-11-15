@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CustomerQueries {
 
@@ -77,5 +78,23 @@ public class CustomerQueries {
 
         ps.execute();
 
+    }
+
+    public static void updateCustomer(Customer customer) throws SQLException {
+        String sql = "UPDATE customers \n" +
+                "\tSET customer_name = ?, address = ?, postal_code = ?, phone = ?, last_update = ?, last_updated_by = ?, division_id = ?\n" +
+                "    WHERE customer_id = ?;";
+
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, customer.getCustomerName());
+        ps.setString(2, customer.getAddress());
+        ps.setString(3, customer.getPostalCode());
+        ps.setString(4, customer.getPhone());
+        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+        ps.setString(6, "Admin"); // FIXME: 11/15/2022 last_updated_by is hardcoded. Make it dynamic.
+        ps.setInt(7,customer.getDivisionId());
+        ps.setInt(8, customer.getCustomerId());
+
+        ps.execute();
     }
 }
