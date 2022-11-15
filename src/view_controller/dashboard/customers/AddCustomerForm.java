@@ -30,20 +30,21 @@ public class AddCustomerForm implements Initializable {
     @FXML private Button submitButton;
     @FXML private Button cancelButton;
 
+    private ObservableList<FirstLevelDivision> divisions;
+    private ObservableList<Country> countries;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
             // QUERY: Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
-            ObservableList<FirstLevelDivision> divisions = FirstLevelDivisionQueries.getAllDivisions();
-            ObservableList<Country> countries = CountryQueries.getAllCountries();
+            divisions = FirstLevelDivisionQueries.getAllDivisions();
+            countries = CountryQueries.getAllCountries();
 
             // Lists to hold the string names to display in the dropdown boxes.
             ObservableList<String> countryNames = FXCollections.observableArrayList();
+            ObservableList<String> divisionNames = FXCollections.observableArrayList();
 
-            countries.forEach((d) -> {
-                countryNames.add(d.getCountry());
-            });
+            countries.forEach((d) -> countryNames.add(d.getCountry()));
 
             countryDropdown.setItems(countryNames);
 
@@ -51,10 +52,9 @@ public class AddCustomerForm implements Initializable {
             countryDropdown.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
                 String selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
 
-                // FIXME: 11/15/2022 .clear() was leaving blank space in the combobox after selecting and deselecting UK
-                // Upon new selection -- refresh divisionNames list.
-                ObservableList<String> divisionNames = FXCollections.observableArrayList();
-//                divisionNames.clear();
+                // Upon new selection -- refresh divisionNames list and fully clear the combobox -- fixes a problem where the combobox had blank space in it.
+                divisionNames.clear();
+                divisionDropdown.getItems().clear();
 
                 // Checks for all divisions that fall within the selected country and adds them to  divisionNames list for display.
                 divisions.forEach((d) -> {
@@ -99,11 +99,19 @@ public class AddCustomerForm implements Initializable {
         String address = addressField.getText();
         String postalCode = postalCodeField.getText();
         String phone = phoneField.getText();
+        String selectedDivisionName = divisionDropdown.getSelectionModel().getSelectedItem();
+        Integer divisionId = null;
 
-        // FIXME: 11/14/2022  -- CHANGE DIVISION ID TO BE DYNAMIC
+        // Retrieve the division id by checking the selectedDivisionName against all divisions that are in the database.
+        for (FirstLevelDivision d : divisions) {
+            if (d.getDivision().equals(selectedDivisionName)) {
+                divisionId = d.getDivisionId();
+            }
+        }
+
         // -- Create a dropdown box to prompt the user for their country,
         // upon submission the division id should be calculated based on the country selected.
-        Customer newCustomer = new Customer(customerName, address, postalCode, phone,1);
+        Customer newCustomer = new Customer(customerName, address, postalCode, phone, divisionId);
 
         CustomerQueries.addCustomer(newCustomer);
 
