@@ -30,19 +30,23 @@ public class AddCustomerForm implements Initializable {
     @FXML private Button submitButton;
     @FXML private Button cancelButton;
 
+    // FIXME: 11/15/2022 Repeated code
     private ObservableList<FirstLevelDivision> divisions;
     private ObservableList<Country> countries;
+    private ObservableList<String> countryNames;
+    private ObservableList<String> divisionNames;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        // FIXME: 11/15/2022 Repeated code
         try {
             // QUERY: Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
             divisions = FirstLevelDivisionQueries.getAllDivisions();
             countries = CountryQueries.getAllCountries();
 
             // Lists to hold the string names to display in the dropdown boxes.
-            ObservableList<String> countryNames = FXCollections.observableArrayList();
-            ObservableList<String> divisionNames = FXCollections.observableArrayList();
+            countryNames = FXCollections.observableArrayList();
+            divisionNames = FXCollections.observableArrayList();
 
             countries.forEach((d) -> countryNames.add(d.getCountry()));
 
@@ -73,15 +77,9 @@ public class AddCustomerForm implements Initializable {
     }
 
     /**
-     * Closes window when the cancel button is pressed.
-     */
-    public void closeForm() {
-        Helper.closeWindow(cancelButton);
-    }
-
-    /**
      *
      */
+    // FIXME: 11/15/2022 Repeating code
     public void submitForm() throws SQLException {
         // Alerts
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -90,7 +88,9 @@ public class AddCustomerForm implements Initializable {
         successAlert.setContentText("Customer successfully created.");
 
         // Continuously Prompts user with an error message if any of the fields are empty
-        if (nameField.getText().isEmpty() || addressField.getText().isEmpty() || phoneField.getText().isEmpty() || postalCodeField.getText().isEmpty()) {
+        // FIXME: 11/15/2022 Add dropdowns to this error check
+        if (nameField.getText().isEmpty() || addressField.getText().isEmpty() || phoneField.getText().isEmpty() ||
+                postalCodeField.getText().isEmpty() || divisionDropdown.getSelectionModel().isEmpty() || countryDropdown.getSelectionModel().isEmpty()) {
             errorAlert.show();
             return;
         }
@@ -109,10 +109,7 @@ public class AddCustomerForm implements Initializable {
             }
         }
 
-        // -- Create a dropdown box to prompt the user for their country,
-        // upon submission the division id should be calculated based on the country selected.
         Customer newCustomer = new Customer(customerName, address, postalCode, phone, divisionId);
-
         CustomerQueries.addCustomer(newCustomer);
 
         // RELOAD MAIN DATA ON DASHBOARD AFTER SUBMISSION AND CLOSE WINDOW
@@ -123,4 +120,10 @@ public class AddCustomerForm implements Initializable {
         Helper.closeWindow(submitButton);
     }
 
+    /**
+     * Closes window when the cancel button is pressed.
+     */
+    public void closeForm() {
+        Helper.closeWindow(cancelButton);
+    }
 }
