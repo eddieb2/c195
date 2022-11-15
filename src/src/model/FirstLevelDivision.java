@@ -3,12 +3,12 @@ package src.model;
 public class FirstLevelDivision {
     private Integer divisionId;
     private String division;
-    private Integer countryId;
+    private String country;
 
-    public FirstLevelDivision(Integer divisionId, String division, Integer countryId) {
+    public FirstLevelDivision(Integer divisionId, String division, String country) {
         this.divisionId = divisionId;
         this.division = division;
-        this.countryId = countryId;
+        this.country = country;
     }
 
     public Integer getDivisionId() {
@@ -27,11 +27,11 @@ public class FirstLevelDivision {
         this.division = division;
     }
 
-    public Integer getCountryId() {
-        return countryId;
+    public String getCountry() {
+        return country;
     }
 
-    public void setCountryId(Integer countryId) {
-        this.countryId = countryId;
+    public void setCountry(String country) {
+        this.country = country;
     }
 }
