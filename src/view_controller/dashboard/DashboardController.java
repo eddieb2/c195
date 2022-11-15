@@ -1,23 +1,33 @@
 package view_controller.dashboard;
 
+import DAO.CustomerQueries;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import src.model.Customer;
 import view_controller.dashboard.appointments.AppointmentsController;
-import view_controller.dashboard.customers.CustomersController;
+import view_controller.dashboard.customers.CustomersTabController;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 // YT video explaining how to link 2 fxml files into one
 // https://www.youtube.com/watch?v=osIRfgHTfyg
 
-public class DashboardController {
+public class DashboardController implements Initializable {
     @FXML private AnchorPane dashboard;
     @FXML private AnchorPane customersTab;
     @FXML private AnchorPane appointmentsTab;
@@ -29,10 +39,14 @@ public class DashboardController {
     @FXML private Button updateAptButton;
     @FXML private Button deleteAptButton;
 
-
     // Not sure if these two variables are needed
     @FXML private AppointmentsController appointmentsController;
-    @FXML private CustomersController customersController;
+    @FXML private CustomersTabController customersController;
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
 
     /**
      * Opens the addCustomerForm when the addCustomerButton is fired.
@@ -62,8 +76,27 @@ public class DashboardController {
     /**
      * Removes a customer from the UI and the database
      */
-    private void deleteCustomer() {
+    @FXML private void deleteCustomer() throws SQLException, IOException {
+        Customer selectedCustomer = CustomersTabController.selectedCustomer;
+        Alert deletionConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
 
+        try {
+            // Prompt for confirmation
+            deletionConfirmation.setContentText("Confirm selection.");
+            Optional<ButtonType> result = deletionConfirmation.showAndWait();
+
+            // Delete selected customer
+            if (result.get() == ButtonType.OK) {
+                CustomerQueries.deleteCustomer(selectedCustomer);
+
+                // Refresh customer table
+                ObservableList<Customer> newCustomerList = CustomerQueries.getAllCustomers();
+                CustomersTabController.customers.setAll(newCustomerList);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
