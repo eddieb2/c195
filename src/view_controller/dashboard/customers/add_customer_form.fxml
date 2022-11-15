@@ -10,17 +10,18 @@
 <?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.customers.AddCustomerForm">
-   <Text layoutX="189.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Customer" textAlignment="CENTER" underline="true" wrappingWidth="204.13671875">
+   <Text layoutX="189.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Create Customer" textAlignment="CENTER" underline="true" wrappingWidth="204.13671875">
       <font>
          <Font size="18.0" />
       </font>
    </Text>
    <AnchorPane layoutX="155.0" layoutY="115.0" prefHeight="365.0" prefWidth="273.0">
       <children>
-          <TextField fx:id="nameField" layoutX="62.0" layoutY="32.0" promptText="Name" />
-         <TextField fx:id="addressField" layoutX="62.0" layoutY="85.0" promptText="Address" />
+         <TextField fx:id="customerIdField" disable="true" layoutX="62.0" layoutY="21.0" promptText="Auto-generated" />
+          <TextField fx:id="nameField" layoutX="62.0" layoutY="63.0" promptText="Name" />
+         <TextField fx:id="addressField" layoutX="62.0" layoutY="104.0" promptText="Address" />
          <TextField fx:id="postalCodeField" layoutX="62.0" layoutY="142.0" promptText="Postal Code" />
-         <TextField fx:id="phoneField" layoutX="62.0" layoutY="192.0" promptText="Phone" />
+         <TextField fx:id="phoneField" layoutX="62.0" layoutY="183.0" promptText="Phone" />
          <ComboBox fx:id="countryDropdown" layoutX="62.0" layoutY="250.0" prefWidth="150.0" promptText="Country" />
          <ComboBox fx:id="divisionDropdown" layoutX="62.0" layoutY="301.0" prefWidth="150.0" promptText="State/Province" />
       </children>
