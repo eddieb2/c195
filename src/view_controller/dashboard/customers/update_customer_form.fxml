@@ -1,14 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view_controller.dashboard.customers.UpdateCustomerForm"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.customers.UpdateCustomerForm">
+   <Text layoutX="189.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Update Customer" textAlignment="CENTER" underline="true" wrappingWidth="204.13671875">
+      <font>
+         <Font size="18.0" />
+      </font>
+   </Text>
+   <AnchorPane layoutX="155.0" layoutY="115.0" prefHeight="365.0" prefWidth="273.0">
+      <children>
+         <TextField fx:id="customerIdField" disable="true" layoutX="62.0" layoutY="14.0" prefHeight="25.0" prefWidth="149.0" />
+          <TextField fx:id="nameField" layoutX="62.0" layoutY="54.0" promptText="Name" />
+         <TextField fx:id="addressField" layoutX="62.0" layoutY="100.0" promptText="Address" />
+         <TextField fx:id="postalCodeField" layoutX="62.0" layoutY="140.0" promptText="Postal Code" />
+         <TextField fx:id="phoneField" layoutX="62.0" layoutY="183.0" promptText="Phone" />
+         <ComboBox fx:id="countryDropdown" layoutX="62.0" layoutY="250.0" prefWidth="150.0" promptText="Country" />
+         <ComboBox fx:id="divisionDropdown" layoutX="62.0" layoutY="301.0" prefWidth="150.0" promptText="State/Province" />
+      </children>
+   </AnchorPane>
+   <HBox alignment="CENTER" layoutX="191.0" layoutY="488.0" prefHeight="37.0" prefWidth="200.0">
+      <children>
+         <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submitForm" text="Submit" />
+         <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#closeForm" text="Cancel" textAlignment="CENTER">
+            <HBox.margin>
+               <Insets left="20.0" />
+            </HBox.margin>
+         </Button>
+      </children>
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets>
+   </HBox>
 </AnchorPane>
