@@ -11,12 +11,10 @@ public class Customer {
     private String postalCode;
     private String phone;
     private Integer divisionId;
-
     private Timestamp createDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdatedBy;
-
 
     // Used when pulling data from the database
     public Customer(Integer customerId, String customerName, String address, String postalCode, String phone, Integer divisionId, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy) {
