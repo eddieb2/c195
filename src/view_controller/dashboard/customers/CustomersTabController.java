@@ -16,7 +16,6 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
 public class CustomersTabController implements Initializable {
-
     @FXML private AnchorPane customersTab;
     @FXML private TableView<Customer> customersTable; // FIXME: 11/14/2022  MIGHT BREAK
     @FXML private TableColumn<Customer,Integer> idCol;
@@ -31,7 +30,6 @@ public class CustomersTabController implements Initializable {
     @FXML private TableColumn<Customer,String> lastUpdatedByCol;
 
     public static ObservableList<Customer> customers;
-
     public static Customer selectedCustomer;
 
     @Override
@@ -48,28 +46,18 @@ public class CustomersTabController implements Initializable {
         lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
         lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
 
-
         customersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
             selectedCustomer = customersTable.getSelectionModel().getSelectedItem();
         });
 
-
         // Queries the database and saves all the customers to an observable list.
         try {
-             customers = CustomerQueries.getAllCustomers();
-//            refreshCustomersTable();
-            System.out.println("Initialize");
+            customers = CustomerQueries.getAllCustomers();
+            customersTable.setItems(customers);
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
 
-        customersTable.setItems(customers);
     }
 
-    // FIXME: 11/14/2022 Broken - details in notes.txt
-    public void refreshCustomersTable() throws SQLException {
-        customers = CustomerQueries.getAllCustomers();
-        customersTable.setItems(customers);
-        System.out.println("Table refreshed.");
-    }
 }
