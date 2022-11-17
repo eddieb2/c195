@@ -1,8 +1,13 @@
 package DAO;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import src.model.User;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public class UserQueries {
 
@@ -27,4 +32,46 @@ public class UserQueries {
         return false;
     }
 
+    /**
+     * READ
+     * @throws SQLException
+     */
+    public static ObservableList<User> getAllUsers() throws SQLException {
+        String sql = "SELECT * FROM users";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+
+        ResultSet rs = ps.executeQuery();
+
+        ObservableList<User> users = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+            Integer userId = rs.getInt("user_id");
+            String userName = rs.getString("user_name");
+            String password = rs.getString("password");
+            Timestamp createDate = rs.getTimestamp("create_date");
+            String createdBy = rs.getString("created_by");
+            Timestamp lastUpdate = rs.getTimestamp("last_update");
+            String lastUpdatedBy = rs.getString("last_updated_by");
+
+            User newUser = new User(userId, userName, password, createDate, createdBy, lastUpdate, lastUpdatedBy);
+            users.add(newUser);
+        }
+
+        return users;
+    }
+
+    public static ObservableList<Integer> getAllUserIds() throws SQLException {
+        ObservableList<Integer> userIds = FXCollections.observableArrayList();
+
+        String sql = "SELECT user_id FROM users ORDER BY user_id";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Integer userId = rs.getInt("user_id");
+            userIds.add(userId);
+        }
+
+        return userIds;
+    }
 }
