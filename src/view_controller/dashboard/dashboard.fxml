@@ -28,9 +28,9 @@
       </ButtonBar>
       <ButtonBar layoutX="737.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
          <buttons>
-            <Button fx:id="addAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Add Apt." />
-            <Button fx:id="updateAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Update Apt." />
-            <Button fx:id="deleteAptButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Delete Apt." />
+            <Button fx:id="addAptButton" mnemonicParsing="false" onAction="#addAppointmentForm" prefHeight="25.0" prefWidth="116.0" text="Add Apt." />
+            <Button fx:id="updateAptButton" mnemonicParsing="false" onAction="#updateAppointmentForm" prefHeight="25.0" prefWidth="116.0" text="Update Apt." />
+            <Button fx:id="deleteAptButton" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="116.0" text="Delete Apt." />
          </buttons>
       </ButtonBar>
    </children>

@@ -1,6 +1,10 @@
 package view_controller.dashboard;
 
+import DAO.AppointmentQueries;
+import DAO.ContactQueries;
 import DAO.CustomerQueries;
+import DAO.UserQueries;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +18,11 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import src.model.Appointment;
+import src.model.Contact;
 import src.model.Customer;
-import view_controller.dashboard.appointments.AppointmentsController;
+import src.model.User;
+import view_controller.dashboard.appointments.AppointmentsTabController;
 import view_controller.dashboard.customers.CustomersTabController;
 
 import java.io.IOException;
@@ -39,19 +46,41 @@ public class DashboardController implements Initializable {
     @FXML private Button updateAptButton;
     @FXML private Button deleteAptButton;
 
-    // Not sure if these two variables are needed
-    @FXML private AppointmentsController appointmentsController;
+    // TODO: 11/16/2022 Not sure if these two variables are needed
+    @FXML private AppointmentsTabController appointmentsController;
     @FXML private CustomersTabController customersController;
+
+    public static ObservableList<User> users = FXCollections.observableArrayList();
+    public static ObservableList<Integer> userIds = FXCollections.observableArrayList();
+    public static ObservableList<Contact> contacts = FXCollections.observableArrayList();
+    public static ObservableList<Integer> contactIds = FXCollections.observableArrayList();
+    public static ObservableList<Integer> customerIds = FXCollections.observableArrayList();
+
+    // FIXME: 11/16/2022 Cant move this variable here from the customer tab controller. The customers table wont populate.
+//    public static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        // Queries the database and saves all the appointments/users/contacts to an observable list.
+        // Populates the appointments table view with appointments-
+        try {
+            // FIXME: 11/16/2022 Cant move this variable here from the customer tab controller. The customers table wont populate.
+//            customers = CustomerQueries.getAllCustomers();
+            customerIds = CustomerQueries.getAllCustomerIds();
+            users = UserQueries.getAllUsers();
+            userIds = UserQueries.getAllUserIds();
+            contacts = ContactQueries.getAllContacts();
+            contactIds = ContactQueries.getAllContactIds();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
+        }
     }
 
     /**
      * Opens the addCustomerForm when the addCustomerButton is fired.
      */
-    // FIX ME: You can continuously open this window. Disable/enable after click/exit
+    // FIXME: 11/16/2022 When the dashboard window closes, any form windows remain open.
+    // FIXME: 11/16/2022 : You can continuously open this window. Disable/enable after click/exit
     @FXML private void addCustomerForm(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("customers/add_customer_form.fxml"));
         Stage stage = new Stage();
@@ -64,6 +93,7 @@ public class DashboardController implements Initializable {
     /**
      * Opens the updateCustomerForm when the updateCustomerButton is fired.
      */
+    // FIXME: 11/16/2022 : You can continuously open this window. Disable/enable after click/exit
     @FXML private void updateCustomerForm() throws IOException {
         Customer selectedCustomer = CustomersTabController.selectedCustomer;
         Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
@@ -118,21 +148,59 @@ public class DashboardController implements Initializable {
     /**
      * Opens the addAppointmentForm when the addAppointmentButton is fired.
      */
-    private void addAppointmentForm() {
-
+    // FIXME: 11/16/2022 : You can continuously open this window. Disable/enable after click/exit
+    @FXML private void addAppointmentForm() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("appointments/add_appointment_form.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Add Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
      * Opens the updateAppointmentForm when the updateAppointmentButton is fired.
      */
-    private void updateAppointmentForm() {
-
+    // FIXME: 11/16/2022 : You can continuously open this window. Disable/enable after click/exit
+    @FXML private void updateAppointmentForm() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("appointments/update_appointment_form.fxml.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        stage.setTitle("Update Appointment");
+        stage.setScene(scene);
+        stage.show();
     }
 
     /**
      * Removes an appointment from the UI and the database
      */
-    private void deleteAppointment() {
+    @FXML private void deleteAppointment() {
+        Appointment selectedAppointment = AppointmentsTabController.selectedAppointment;
+        Alert deletionConfirmation = new Alert(Alert.AlertType.CONFIRMATION);
+        deletionConfirmation.setContentText("Confirm selection.");
+        Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
+        selectionAlert.setContentText("No appointment selected.");
 
+        if (selectedAppointment == null) {
+            selectionAlert.show();
+            return;
+        }
+
+        try {
+            // Prompt for confirmation
+            Optional<ButtonType> result = deletionConfirmation.showAndWait();
+
+            // Delete selected appointment
+            if (result.get() == ButtonType.OK) {
+                AppointmentQueries.deleteAppointmentById(selectedAppointment);
+
+                // Refresh customer table -> communicates with the AppointmentsTabController
+                ObservableList<Appointment> newAppointmentList = AppointmentQueries.getAllAppointments();
+                AppointmentsTabController.appointments.setAll(newAppointmentList);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
