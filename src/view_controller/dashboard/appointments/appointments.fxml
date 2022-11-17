@@ -4,7 +4,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="appointmentsTab" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.appointments.AppointmentsController">
+<AnchorPane fx:id="appointmentsTab" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.appointments.AppointmentsTabController">
    <children>
       <TableView fx:id="appointmentsTable" editable="true" prefHeight="800.0" prefWidth="1200.0">
          <columns>
@@ -15,10 +15,10 @@
             <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />
             <TableColumn fx:id="startCol" prefWidth="75.0" text="Start" />
             <TableColumn fx:id="endCol" prefWidth="75.0" text="End" />
-<!--            <TableColumn prefWidth="75.0" text="Create Date" />-->
-<!--            <TableColumn prefWidth="75.0" text="Created By" />-->
-<!--            <TableColumn prefWidth="89.0" text="Last Update" />-->
-<!--            <TableColumn prefWidth="82.0" text="Last Updated By" />-->
+            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />
+            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />
+            <TableColumn fx:id="lastUpdateCol" prefWidth="89.0" text="Last Update" />
+            <TableColumn fx:id="lastUpdatedByCol" prefWidth="82.0" text="Last Updated By" />
             <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="Customer ID" />
             <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User ID" />
             <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />
