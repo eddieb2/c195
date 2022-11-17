@@ -117,7 +117,7 @@ public class UpdateCustomerForm implements Initializable {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setContentText("One or more fields are blank. All fields must be complete.");
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
-        successAlert.setContentText("Customer successfully created.");
+        successAlert.setContentText("Customer successfully updated.");
 
         // Continuously Prompts user with an error message if any of the fields are empty
         // FIXME: 11/15/2022 Add dropdowns to this error check
