@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-public class Login implements Initializable {
+public class LoginController implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private Button loginButton;
     @FXML private Label locationLabel;
