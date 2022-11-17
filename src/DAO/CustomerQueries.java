@@ -31,16 +31,38 @@ public class CustomerQueries {
             String postalCode = rs.getString("postal_code");
             String phone = rs.getString("phone");
             Integer divisionId = rs.getInt("division_id");
-
             Timestamp createDate = rs.getTimestamp("create_date");
             String createdBy = rs.getString("created_by");
             Timestamp lastUpdate = rs.getTimestamp("last_update");
             String lastUpdatedBy = rs.getString("last_updated_by");
 
+            // FIXME: 11/16/2022 remove this. used for testing
+//            LocalDateTime ldt = TimeConverter.utcToLocalLDT(createDate);
+//            System.out.println(createDate);
+//            System.out.println("UTC -> L: " + TimeConverter.utcToLocalLDT(createDate));
+//            System.out.println("L -> UTC: " + TimeConverter.localToUtcLDT(Timestamp.valueOf(ldt)));
+//            System.out.println("------------------------------------------------------");
+
             customers.add(new Customer(customerId, customerName, customerAddress, postalCode, phone, divisionId, createDate, createdBy, lastUpdate, lastUpdatedBy));
         }
 
+
         return customers;
+    }
+
+    public static ObservableList<Integer> getAllCustomerIds() throws SQLException {
+        ObservableList<Integer> customerIds = FXCollections.observableArrayList();
+
+        String sql = "SELECT customer_id FROM customers ORDER BY customer_id";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            Integer customerId = rs.getInt("customer_id");
+            customerIds.add(customerId);
+        }
+
+        return customerIds;
     }
 
 
@@ -77,7 +99,6 @@ public class CustomerQueries {
         ps.setInt(1, customer.getCustomerId());
 
         ps.execute();
-
     }
 
     public static void updateCustomer(Customer customer) throws SQLException {
