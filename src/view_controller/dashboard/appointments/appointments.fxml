@@ -15,10 +15,10 @@
             <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />
             <TableColumn fx:id="startCol" prefWidth="75.0" text="Start" />
             <TableColumn fx:id="endCol" prefWidth="75.0" text="End" />
-            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />
-            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />
-            <TableColumn fx:id="lastUpdateCol" prefWidth="89.0" text="Last Update" />
-            <TableColumn fx:id="lastUpdatedByCol" prefWidth="82.0" text="Last Updated By" />
+<!--            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />-->
+<!--            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />-->
+<!--            <TableColumn fx:id="lastUpdateCol" prefWidth="89.0" text="Last Update" />-->
+<!--            <TableColumn fx:id="lastUpdatedByCol" prefWidth="82.0" text="Last Updated By" />-->
             <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="Customer ID" />
             <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User ID" />
             <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />

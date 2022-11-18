@@ -3,8 +3,8 @@ package view_controller.dashboard.customers;
 import DAO.CountryQueries;
 import DAO.CustomerQueries;
 import DAO.FirstLevelDivisionQueries;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -21,8 +21,8 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCustomerForm implements Initializable {
-    @FXML private ComboBox<String> countryDropdown;
-    @FXML private ComboBox<String> divisionDropdown;
+    @FXML private ComboBox<Country> countryDropdown;
+    @FXML private ComboBox<FirstLevelDivision> divisionDropdown;
     @FXML private TextField nameField;
     @FXML private TextField addressField;
     @FXML private TextField postalCodeField;
@@ -33,8 +33,6 @@ public class AddCustomerForm implements Initializable {
     // FIXME: 11/15/2022 Repeated code
     private ObservableList<FirstLevelDivision> divisions;
     private ObservableList<Country> countries;
-    private ObservableList<String> countryNames;
-    private ObservableList<String> divisionNames;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -44,31 +42,16 @@ public class AddCustomerForm implements Initializable {
             divisions = FirstLevelDivisionQueries.getAllDivisions();
             countries = CountryQueries.getAllCountries();
 
-            // Lists to hold the string names to display in the dropdown boxes.
-            countryNames = FXCollections.observableArrayList();
-            divisionNames = FXCollections.observableArrayList();
-
-            countries.forEach((d) -> countryNames.add(d.getCountry()));
-
-            countryDropdown.setItems(countryNames);
+            countryDropdown.setItems(countries);
 
             // Watches country selection in country dropdown box.
             countryDropdown.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
-                String selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
+                Country selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
 
-                // Upon new selection -- refresh divisionNames list and fully clear the combobox -- fixes a problem where the combobox had blank space in it.
-                divisionNames.clear();
-                divisionDropdown.getItems().clear();
+                // Set division names in the divisionDropdown based on the currently selected country -- filters division list
+                FilteredList<FirstLevelDivision> filteredDivisions = divisions.filtered(division -> division.getCountry().equals(selectedCountry.getCountry()));
+                divisionDropdown.setItems(filteredDivisions);
 
-                // Checks for all divisions that fall within the selected country and adds them to  divisionNames list for display.
-                divisions.forEach((d) -> {
-                    if (d.getCountry().equals(selectedCountry)) {
-                        divisionNames.add(d.getDivision());
-                    }
-                });
-
-                // Set division names in the divisionDropdown based on the currently selected country
-                divisionDropdown.setItems(divisionNames);
             });
 
         } catch (SQLException e) {
@@ -88,26 +71,19 @@ public class AddCustomerForm implements Initializable {
         successAlert.setContentText("Customer successfully created.");
 
         // Continuously Prompts user with an error message if any of the fields are empty
-        // FIXME: 11/15/2022 Add dropdowns to this error check
         if (nameField.getText().isEmpty() || addressField.getText().isEmpty() || phoneField.getText().isEmpty() ||
                 postalCodeField.getText().isEmpty() || divisionDropdown.getSelectionModel().isEmpty() || countryDropdown.getSelectionModel().isEmpty()) {
             errorAlert.show();
             return;
         }
 
+        // COLLECTS DATA & ADDS NEW CUSTOMER TO THE DATABASE
         String customerName = nameField.getText();
         String address = addressField.getText();
         String postalCode = postalCodeField.getText();
         String phone = phoneField.getText();
-        String selectedDivisionName = divisionDropdown.getSelectionModel().getSelectedItem();
-        Integer divisionId = null;
-
-        // Retrieve the division id by checking the selectedDivisionName against all divisions that are in the database.
-        for (FirstLevelDivision d : divisions) {
-            if (d.getDivision().equals(selectedDivisionName)) {
-                divisionId = d.getDivisionId();
-            }
-        }
+        System.out.println( divisionDropdown.getSelectionModel());
+        Integer divisionId = divisionDropdown.getSelectionModel().getSelectedItem().getDivisionId();
 
         Customer newCustomer = new Customer(customerName, address, postalCode, phone, divisionId);
         CustomerQueries.addCustomer(newCustomer);
@@ -126,4 +102,7 @@ public class AddCustomerForm implements Initializable {
     public void closeForm() {
         Helper.closeWindow(cancelButton);
     }
+
+
+
 }

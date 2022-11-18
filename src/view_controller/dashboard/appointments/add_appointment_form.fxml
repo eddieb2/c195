@@ -23,13 +23,13 @@
             <TextField fx:id="descriptionField" layoutX="62.0" layoutY="104.0" promptText="Description" />
             <TextField fx:id="locationField" layoutX="62.0" layoutY="142.0" promptText="Location" />
             <TextField fx:id="typeField" layoutX="62.0" layoutY="183.0" promptText="Type" />
-         <ComboBox fx:id="startTimeField" layoutX="62.0" layoutY="267.0" prefHeight="25.0" prefWidth="149.0" promptText="Start TIme" />
+         <ComboBox fx:id="startTimeField" layoutX="62.0" layoutY="267.0" prefHeight="25.0" prefWidth="149.0" promptText="Start Time" />
          <ComboBox fx:id="endTimeField" layoutX="62.0" layoutY="318.0" prefHeight="25.0" prefWidth="149.0" promptText="End Time" />
          <ComboBox fx:id="customerIdComboBox" layoutX="284.0" layoutY="21.0" promptText="Customer ID" />
          <ComboBox fx:id="userIdComboBox" layoutX="284.0" layoutY="63.0" promptText="User ID" />
          <ComboBox fx:id="contactIdComboBox" layoutX="284.0" layoutY="104.0" prefHeight="25.0" prefWidth="149.0" promptText="Contact ID" />
-         <DatePicker fx:id="startDateField" layoutX="284.0" layoutY="267.0" promptText="Start Date" />
-         <DatePicker fx:id="endDateField" layoutX="284.0" layoutY="318.0" promptText="End Date" />
+         <DatePicker fx:id="startDatePicker" layoutX="284.0" layoutY="267.0" promptText="Start Date" />
+         <DatePicker fx:id="endDatePicker" layoutX="284.0" layoutY="318.0" promptText="End Date" />
         </children>
     </AnchorPane>
     <HBox alignment="CENTER" layoutX="181.0" layoutY="549.0" prefHeight="37.0" prefWidth="200.0">

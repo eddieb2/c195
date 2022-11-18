@@ -4,15 +4,17 @@ public class FirstLevelDivision {
     private Integer divisionId;
     private String division;
     private String country;
+    private Integer countryId;
 
     public FirstLevelDivision(Integer divisionId) {
         this.divisionId = divisionId;
     }
 
-    public FirstLevelDivision(Integer divisionId, String division, String country) {
+    public FirstLevelDivision(Integer divisionId, String division, String country, Integer countryId) {
         this.divisionId = divisionId;
         this.division = division;
         this.country = country;
+        this.countryId = countryId;
     }
 
     public Integer getDivisionId() {
@@ -38,4 +40,14 @@ public class FirstLevelDivision {
     public void setCountry(String country) {
         this.country = country;
     }
+
+    public Integer getCountryId() {
+        return countryId;
+    }
+
+    public void setCountryId(Integer countryId) {
+        this.countryId = countryId;
+    }
+
+
 }

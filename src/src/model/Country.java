@@ -4,6 +4,9 @@ public class Country {
     private Integer countryId;
     private String country;
 
+    public Country() {
+    }
+
     public Country(Integer countryId, String country) {
         this.countryId = countryId;
         this.country = country;
@@ -23,5 +26,10 @@ public class Country {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public String toString() {
+        return this.country;
     }
 }

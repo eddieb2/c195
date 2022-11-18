@@ -3,8 +3,8 @@ package view_controller.dashboard.customers;
 import DAO.CountryQueries;
 import DAO.CustomerQueries;
 import DAO.FirstLevelDivisionQueries;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 
 public class UpdateCustomerForm implements Initializable {
     @FXML private TextField customerIdField;
-    @FXML private ComboBox<String> countryDropdown;
-    @FXML private ComboBox<String> divisionDropdown;
+    @FXML private ComboBox<Country> countryDropdown;
+    @FXML private ComboBox<FirstLevelDivision> divisionDropdown;
     @FXML private TextField nameField;
     @FXML private TextField addressField;
     @FXML private TextField postalCodeField;
@@ -35,10 +35,6 @@ public class UpdateCustomerForm implements Initializable {
     // FIXME: 11/15/2022 Repeated code - divisions, countries
     private ObservableList<FirstLevelDivision> divisions;
     private ObservableList<Country> countries;
-    private ObservableList<String> countryNames;
-    private ObservableList<String> divisionNames;
-    private Customer customer;
-
     private Customer selectedCustomer = CustomersTabController.selectedCustomer;
 
     @Override
@@ -49,31 +45,16 @@ public class UpdateCustomerForm implements Initializable {
             divisions = FirstLevelDivisionQueries.getAllDivisions();
             countries = CountryQueries.getAllCountries();
 
-            // Lists to hold the string names to display in the dropdown boxes.
-            countryNames = FXCollections.observableArrayList();
-            divisionNames = FXCollections.observableArrayList();
-
-            countries.forEach((d) -> countryNames.add(d.getCountry()));
-
-            countryDropdown.setItems(countryNames);
+            countryDropdown.setItems(countries);
 
             // Watches country selection in country dropdown box.
             countryDropdown.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
-                String selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
+                Country selectedCountry = countryDropdown.getSelectionModel().getSelectedItem();
 
-                // Upon new selection -- refresh divisionNames list and fully clear the combobox -- fixes a problem where the combobox had blank space in it.
-                divisionNames.clear();
-                divisionDropdown.getItems().clear();
+                // Set division names in the divisionDropdown based on the currently selected country -- filters division list
+                FilteredList<FirstLevelDivision> filteredDivisions = divisions.filtered(division -> division.getCountry().equals(selectedCountry.getCountry()));
+                divisionDropdown.setItems(filteredDivisions);
 
-                // Checks for all divisions that fall within the selected country and adds them to  divisionNames list for display.
-                divisions.forEach((d) -> {
-                    if (d.getCountry().equals(selectedCountry)) {
-                        divisionNames.add(d.getDivision());
-                    }
-                });
-
-                // Set division names in the divisionDropdown based on the currently selected country
-                divisionDropdown.setItems(divisionNames);
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,8 +62,8 @@ public class UpdateCustomerForm implements Initializable {
 
         try {
             loadCustomer();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -98,13 +79,35 @@ public class UpdateCustomerForm implements Initializable {
         postalCodeField.setText(selectedCustomer.getPostalCode());
         phoneField.setText(selectedCustomer.getPhone());
 
+        //  FIXME prob. should be in a function?
+        // ================================================================================================
         // Queries DB for division information. Sets the default value of both combo boxes to the customer's country and region.
-        Integer divisionId = selectedCustomer.getDivisionId();
-        String divisionName = FirstLevelDivisionQueries.getDivisionById(divisionId).getDivision();
-        String countryName = FirstLevelDivisionQueries.getDivisionById(divisionId).getCountry();
+        Integer customerDivisionId = selectedCustomer.getDivisionId();
+        FirstLevelDivision customerDivision = null;
 
-        divisionDropdown.setValue(divisionName);
-        countryDropdown.setValue(countryName);
+        // loop through divisions, set customerDivision to the division that matches the divisionId
+        for (FirstLevelDivision division: divisions) {
+            if (division.getDivisionId().equals(customerDivisionId)) {
+                customerDivision = division;
+                break;
+            }
+        }
+
+        Integer customerCountryId = customerDivision.getCountryId();
+        Country customerCountry = null;
+
+        // loop through countries, set customerCountry to the country that matches the countryId
+        for (Country country: countries) {
+            if (country.getCountryId().equals(customerCountryId)){
+                customerCountry = country;
+                break;
+            }
+        }
+
+        divisionDropdown.setValue(customerDivision); // FLD object param
+        countryDropdown.setValue(customerCountry); // Country object param
+        // ================================================================================================
+
     }
 
     /**
@@ -131,16 +134,7 @@ public class UpdateCustomerForm implements Initializable {
         String address = addressField.getText();
         String postalCode = postalCodeField.getText();
         String phone = phoneField.getText();
-        String selectedDivisionName = divisionDropdown.getSelectionModel().getSelectedItem();
-        Integer divisionId = null;
-
-
-        // Retrieve the division id by checking the selectedDivisionName against all divisions that are in the database.
-        for (FirstLevelDivision d : divisions) {
-            if (d.getDivision().equals(selectedDivisionName)) {
-                divisionId = d.getDivisionId();
-            }
-        }
+        Integer divisionId = divisionDropdown.getSelectionModel().getSelectedItem().getDivisionId();
 
         // FIXME: 11/15/2022 only difference between updatecustomer and addcustomer
         selectedCustomer.setCustomerName(customerName);

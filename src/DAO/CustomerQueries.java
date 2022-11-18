@@ -36,12 +36,9 @@ public class CustomerQueries {
             Timestamp lastUpdate = rs.getTimestamp("last_update");
             String lastUpdatedBy = rs.getString("last_updated_by");
 
-            // FIXME: 11/16/2022 remove this. used for testing
-//            LocalDateTime ldt = TimeConverter.utcToLocalLDT(createDate);
-//            System.out.println(createDate);
-//            System.out.println("UTC -> L: " + TimeConverter.utcToLocalLDT(createDate));
-//            System.out.println("L -> UTC: " + TimeConverter.localToUtcLDT(Timestamp.valueOf(ldt)));
-//            System.out.println("------------------------------------------------------");
+
+            System.out.println(createDate.toLocalDateTime()); // timestamp gets automatically converted to the local time
+            System.out.println(rs.getTime("create_date"));
 
             customers.add(new Customer(customerId, customerName, customerAddress, postalCode, phone, divisionId, createDate, createdBy, lastUpdate, lastUpdatedBy));
         }

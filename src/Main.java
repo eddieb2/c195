@@ -1,19 +1,26 @@
+import DAO.DBConnection;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import DAO.DBConnection;
+import src.model.Session;
+import src.model.User;
 
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+    // Sets the current logged in user for testing purposes. -- CURRENTLY NOT WORKING
+    public static User testUser = new User("admin","admin");
+    public static Session currentSession = new Session(testUser);
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        try{
+    public void start(Stage primaryStage) throws Exception {
+        System.out.println(currentSession.getAutheticatedUser().getUserName());
+
+        try {
             ResourceBundle rb = ResourceBundle.getBundle("Lang/Nat", Locale.getDefault());
 
             // For testing individual views -- switch back to login form when project complete

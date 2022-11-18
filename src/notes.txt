@@ -1,11 +1,27 @@
-Current problem:
+TODO #1: Customer CRUD -- completed
+CREATE customer
+-complete
+READ
+- complete
+DELETE
+- complete
+Update
+- incomplete
+- finish UI
+- update db when submitted
 
-customer table updates
-exec add new customer
-       --> table updates fine
+TODO #2: Customer Table
+- Check with instructor: Do I have to display division name in the table view? Currently, only division id is shown.
+- Check with instructor: Ability to update customers directly in the tableview ??
+- ********* ALL APPOINTMENTS MUST BE DELETED BEFORE A CUSTOMER CAN BE DELETED **********
 
-exec delete customer
-        --> customer table wont refresh and then add customer will add
-        new customer to the database but the table wont refresh
+EXTRAS
+TODO: Refactor repeating code
 
-** any time that the delete button is fired the table will not refresh at all.
+
+TODO #3: Appointments CRUD
+CREATE
+READ
+- complete
+UPDATE
+DELETE

@@ -1,6 +1,7 @@
 package src.model;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 /*
 Appointment_ID INT(10) (PK)
@@ -24,17 +25,19 @@ public class Appointment {
     private String description;
     private String location;
     private String type;
-    private Timestamp start;
-    private Timestamp end;
+    private LocalDateTime start;
+    private LocalDateTime end;
+
     private Timestamp createDate;
     private String createdBy;
     private Timestamp lastUpdate;
     private String lastUpdatedBy;
+
     private Integer customerId;
     private Integer userId;
     private Integer contactId;
 
-    public Appointment(Integer appointmentId, String title, String description, String location, String type, Timestamp start, Timestamp end, Integer customerId, Integer userId, Integer contactId) {
+    public Appointment(Integer appointmentId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, Integer customerId, Integer userId, Integer contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
@@ -47,18 +50,13 @@ public class Appointment {
         this.contactId = contactId;
     }
 
-    public Appointment(Integer appointmentId, String title, String description, String location, String type, Timestamp start, Timestamp end, Timestamp createDate, String createdBy, Timestamp lastUpdate, String lastUpdatedBy, Integer customerId, Integer userId, Integer contactId) {
-        this.appointmentId = appointmentId;
+    public Appointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, Integer customerId, Integer userId, Integer contactId) {
         this.title = title;
         this.description = description;
         this.location = location;
         this.type = type;
         this.start = start;
         this.end = end;
-        this.createDate = createDate;
-        this.createdBy = createdBy;
-        this.lastUpdate = lastUpdate;
-        this.lastUpdatedBy = lastUpdatedBy;
         this.customerId = customerId;
         this.userId = userId;
         this.contactId = contactId;
@@ -137,28 +135,28 @@ public class Appointment {
     /**
      * @return start
      */
-    public Timestamp getStart() {
+    public LocalDateTime getStart() {
         return start;
     }
 
     /**
      * @param start
      */
-    public void setStart(Timestamp start) {
+    public void setStart(LocalDateTime start) {
         this.start = start;
     }
 
     /**
      * @return end
      */
-    public Timestamp getEnd() {
+    public LocalDateTime getEnd() {
         return end;
     }
 
     /**
      * @param end
      */
-    public void setEnd(Timestamp end) {
+    public void setEnd(LocalDateTime end) {
         this.end = end;
     }
 

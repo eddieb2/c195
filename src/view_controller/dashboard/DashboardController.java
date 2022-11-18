@@ -54,6 +54,7 @@ public class DashboardController implements Initializable {
     public static ObservableList<Integer> userIds = FXCollections.observableArrayList();
     public static ObservableList<Contact> contacts = FXCollections.observableArrayList();
     public static ObservableList<Integer> contactIds = FXCollections.observableArrayList();
+    public static ObservableList<Customer> customers = FXCollections.observableArrayList();
     public static ObservableList<Integer> customerIds = FXCollections.observableArrayList();
 
     // FIXME: 11/16/2022 Cant move this variable here from the customer tab controller. The customers table wont populate.
@@ -65,7 +66,7 @@ public class DashboardController implements Initializable {
         // Populates the appointments table view with appointments-
         try {
             // FIXME: 11/16/2022 Cant move this variable here from the customer tab controller. The customers table wont populate.
-//            customers = CustomerQueries.getAllCustomers();
+            customers = CustomerQueries.getAllCustomers();
             customerIds = CustomerQueries.getAllCustomerIds();
             users = UserQueries.getAllUsers();
             userIds = UserQueries.getAllUserIds();
@@ -163,7 +164,16 @@ public class DashboardController implements Initializable {
      */
     // FIXME: 11/16/2022 : You can continuously open this window. Disable/enable after click/exit
     @FXML private void updateAppointmentForm() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("appointments/update_appointment_form.fxml.fxml"));
+        Appointment selectedAppointment = AppointmentsTabController.selectedAppointment;
+        Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
+        selectionAlert.setContentText("No appointment selected.");
+
+        if (selectedAppointment == null) {
+            selectionAlert.show();
+            return;
+        }
+
+        Parent root = FXMLLoader.load(getClass().getResource("appointments/update_appointment_form.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         stage.setTitle("Update Appointment");
