@@ -13,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import src.model.Appointment;
 import src.model.Contact;
@@ -28,6 +25,9 @@ import view_controller.dashboard.customers.CustomersTabController;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -35,20 +35,9 @@ import java.util.ResourceBundle;
 // https://www.youtube.com/watch?v=osIRfgHTfyg
 
 public class DashboardController implements Initializable {
-    @FXML private AnchorPane dashboard;
-    @FXML private AnchorPane customersTab;
-    @FXML private AnchorPane appointmentsTab;
-    @FXML private ButtonBar customerButtonBar;
-    @FXML private Button addCustomerButton;
-    @FXML private Button updateCustomerButton;
-    @FXML private Button deleteCustomerButton;
-    @FXML private Button addAptButton;
-    @FXML private Button updateAptButton;
-    @FXML private Button deleteAptButton;
-
     // TODO: 11/16/2022 Not sure if these two variables are needed
-    @FXML private AppointmentsTabController appointmentsController;
-    @FXML private CustomersTabController customersController;
+    @FXML private AppointmentsTabController appointmentsTabController;
+    @FXML private CustomersTabController customersTabController;
 
     public static ObservableList<User> users = FXCollections.observableArrayList();
     public static ObservableList<Integer> userIds = FXCollections.observableArrayList();
@@ -60,8 +49,10 @@ public class DashboardController implements Initializable {
     // FIXME: 11/16/2022 Cant move this variable here from the customer tab controller. The customers table wont populate.
 //    public static ObservableList<Customer> customers = FXCollections.observableArrayList();
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         // Queries the database and saves all the appointments/users/contacts to an observable list.
         // Populates the appointments table view with appointments-
         try {
@@ -72,10 +63,13 @@ public class DashboardController implements Initializable {
             userIds = UserQueries.getAllUserIds();
             contacts = ContactQueries.getAllContacts();
             contactIds = ContactQueries.getAllContactIds();
+
+            checkUpcomingAppointments();
         } catch (SQLException throwable) {
             throwable.printStackTrace();
         }
     }
+
 
     /**
      * Opens the addCustomerForm when the addCustomerButton is fired.
@@ -190,6 +184,8 @@ public class DashboardController implements Initializable {
         deletionConfirmation.setContentText("Confirm selection.");
         Alert selectionAlert = new Alert(Alert.AlertType.WARNING);
         selectionAlert.setContentText("No appointment selected.");
+        Alert deletedAppointmentInfoAlert = new Alert(Alert.AlertType.INFORMATION);
+        deletedAppointmentInfoAlert.setContentText("Appointment Canceled. \nAppointment ID: " + selectedAppointment.getAppointmentId() + "  Type: " + selectedAppointment.getType());
 
         if (selectedAppointment == null) {
             selectionAlert.show();
@@ -207,10 +203,45 @@ public class DashboardController implements Initializable {
                 // Refresh customer table -> communicates with the AppointmentsTabController
                 ObservableList<Appointment> newAppointmentList = AppointmentQueries.getAllAppointments();
                 AppointmentsTabController.appointments.setAll(newAppointmentList);
+
+                deletedAppointmentInfoAlert.show();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Checks all appointments to see if there are any scheduled within the next 15 minutes of the current time.
+     */
+    public static void checkUpcomingAppointments() {
+        Alert aptAlert = new Alert(Alert.AlertType.INFORMATION);
+
+        Integer appointmentId = null;
+        LocalTime appointmentTime = null;
+        LocalDate appointmentDate = null;
+
+        for (Appointment apt: AppointmentsTabController.appointments) {
+            LocalDateTime localDateTimeNow = LocalDateTime.now();
+            LocalDateTime aptDateTimeStart = apt.getStart();
+            LocalDateTime timeBeforeApt = aptDateTimeStart.minusMinutes(15).plusSeconds(1);
+
+            if (localDateTimeNow.isBefore(aptDateTimeStart) && localDateTimeNow.isAfter(timeBeforeApt)) {
+                appointmentId = apt.getAppointmentId();
+                appointmentDate = apt.getStart().toLocalDate();
+                appointmentTime = apt.getStart().toLocalTime();
+            }
+
+        }
+
+        if (appointmentId == null){
+            aptAlert.setContentText("There are no upcoming appointments.");
+        } else {
+            aptAlert.setContentText("There is an appointment scheduled within the next 15 minutes! " +
+                    "\n\nAppointment ID: " + appointmentId + " \nDate: " + appointmentDate + " \nTime: " + appointmentTime);
+        }
+
+        aptAlert.show();
     }
 }
