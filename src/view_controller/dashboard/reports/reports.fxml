@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.reports.ReportsController">
+   <children>
+      <ComboBox fx:id="contactComboBox" layoutX="630.0" layoutY="70.0" prefWidth="150.0" promptText="Select Contact" />
+      <TableView fx:id="contactScheduleTable" layoutX="21.0" layoutY="105.0" prefHeight="143.0" prefWidth="759.0" AnchorPane.bottomAnchor="352.0" AnchorPane.leftAnchor="21.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="105.0">
+        <columns>
+          <TableColumn fx:id="appointmentIdColumn" prefWidth="126.0" text="Apt. ID" />
+          <TableColumn fx:id="titleColumn" prefWidth="87.0" text="Title" />
+            <TableColumn fx:id="typeColumn" prefWidth="87.0" text="Type" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="87.0" text="Description" />
+            <TableColumn fx:id="startDateColumn" prefWidth="87.0" text="Start Date" />
+            <TableColumn fx:id="endDateColumn" prefWidth="87.0" text="End Date" />
+            <TableColumn fx:id="startTimeColumn" prefWidth="87.0" text="Start Time" />
+            <TableColumn fx:id="endTimeColumn" prefWidth="87.0" text="End Time" />
+            <TableColumn fx:id="customerIdColumn" prefWidth="87.0" text="Customer ID" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="21.0" layoutY="10.0" prefHeight="17.0" prefWidth="90.0" text="Reports" underline="true">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="21.0" layoutY="80.0" prefHeight="17.0" prefWidth="111.0" text="Contact Schedule">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="appointmentTotalsTable" layoutX="21.0" layoutY="300.0" prefHeight="257.0" prefWidth="358.0">
+        <columns>
+            <TableColumn fx:id="appointmentMonthColumn" prefWidth="75.0" text="Month" />
+          <TableColumn fx:id="appointmentTypeColumn" prefWidth="57.0" text="Type" />
+            <TableColumn fx:id="appointmentTotalColumn" prefWidth="57.0" text="Total" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="21.0" layoutY="275.0" prefHeight="17.0" prefWidth="171.0" text="Appointment Totals by Month">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+      <TableView fx:id="customersByCountryTable" layoutX="422.0" layoutY="300.0" prefHeight="257.0" prefWidth="358.0">
+         <columns>
+            <TableColumn fx:id="countryColumn" prefWidth="57.0" text="Country" />
+            <TableColumn fx:id="totalCustomersColumn" prefWidth="75.0" text="Total Customers" />
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Label layoutX="422.0" layoutY="275.0" prefHeight="17.0" prefWidth="171.0" text="Customers by Country">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
