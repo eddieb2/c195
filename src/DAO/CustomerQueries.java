@@ -3,18 +3,19 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import src.model.Customer;
-
+import src.model.ReportByCountry;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
+/**
+ * Methods for retrieving Customer data from the database.
+ */
 public class CustomerQueries {
 
     /**
-     * Read all customers.
-     * @return
+     * Retrieves all customers from the database.
+     * @return ObservableList<Customer>
      * @throws SQLException
      */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
@@ -31,22 +32,19 @@ public class CustomerQueries {
             String postalCode = rs.getString("postal_code");
             String phone = rs.getString("phone");
             Integer divisionId = rs.getInt("division_id");
-            Timestamp createDate = rs.getTimestamp("create_date");
-            String createdBy = rs.getString("created_by");
-            Timestamp lastUpdate = rs.getTimestamp("last_update");
-            String lastUpdatedBy = rs.getString("last_updated_by");
 
-
-            System.out.println(createDate.toLocalDateTime()); // timestamp gets automatically converted to the local time
-            System.out.println(rs.getTime("create_date"));
-
-            customers.add(new Customer(customerId, customerName, customerAddress, postalCode, phone, divisionId, createDate, createdBy, lastUpdate, lastUpdatedBy));
+            customers.add(new Customer(customerId, customerName, customerAddress, postalCode, phone, divisionId));
         }
 
 
         return customers;
     }
 
+    /**
+     * Retrieves all customer ids from the database.
+     * @return ObservableList<Integer>
+     * @throws SQLException
+     */
     public static ObservableList<Integer> getAllCustomerIds() throws SQLException {
         ObservableList<Integer> customerIds = FXCollections.observableArrayList();
 
@@ -64,11 +62,11 @@ public class CustomerQueries {
 
 
     /**
-     * Create new customer.
+     * Adds a new customer to the database.
      * @param customer
      */
     public static void addCustomer(Customer customer) throws SQLException {
-        String sql = "INSERT INTO customers(customer_name, address, postal_code, phone, division_id, create_date, created_by, last_update, last_updated_by) VALUES(?,?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO customers(customer_name, address, postal_code, phone, division_id) VALUES(?,?,?,?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
         ps.setString(1, customer.getCustomerName());
@@ -76,16 +74,33 @@ public class CustomerQueries {
         ps.setString(3, customer.getPostalCode());
         ps.setString(4, customer.getPhone());
         ps.setInt(5, customer.getDivisionId());
-        ps.setTimestamp(6, customer.getCreateDate());
-        ps.setString(7, customer.getCreatedBy());
-        ps.setTimestamp(8, customer.getLastUpdate());
-        ps.setString(9, customer.getLastUpdatedBy());
 
         ps.execute();
     }
 
     /**
-     * Delete a customer.
+     * Updates a specified customer.
+     * @param customer
+     * @throws SQLException
+     */
+    public static void updateCustomer(Customer customer) throws SQLException {
+        String sql = "UPDATE customers \n" +
+                "\tSET customer_name = ?, address = ?, postal_code = ?, phone = ?, division_id = ?\n" +
+                "    WHERE customer_id = ?;";
+
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, customer.getCustomerName());
+        ps.setString(2, customer.getAddress());
+        ps.setString(3, customer.getPostalCode());
+        ps.setString(4, customer.getPhone());
+        ps.setInt(5,customer.getDivisionId());
+        ps.setInt(6, customer.getCustomerId());
+
+        ps.execute();
+    }
+
+    /**
+     * Delete a specified customer.
      * @param customer
      * @throws SQLException
      */
@@ -98,21 +113,30 @@ public class CustomerQueries {
         ps.execute();
     }
 
-    public static void updateCustomer(Customer customer) throws SQLException {
-        String sql = "UPDATE customers \n" +
-                "\tSET customer_name = ?, address = ?, postal_code = ?, phone = ?, last_update = ?, last_updated_by = ?, division_id = ?\n" +
-                "    WHERE customer_id = ?;";
+
+    /**
+     * Retrieves the total number of customers for each country.
+     * @return ObservableList<ReportByCountry>
+     * @throws SQLException
+     */
+    public static ObservableList<ReportByCountry> getCustomersTotalByCountry() throws SQLException {
+        String sql = "select countries.Country, COUNT(*) AS total from customers AS c\n" +
+                "\tJOIN first_level_divisions AS f ON c.Division_ID = f.Division_ID\n" +
+                "    JOIN countries ON f.Country_ID = countries.Country_ID\n" +
+                "    GROUP BY countries.country;";
 
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
-        ps.setString(1, customer.getCustomerName());
-        ps.setString(2, customer.getAddress());
-        ps.setString(3, customer.getPostalCode());
-        ps.setString(4, customer.getPhone());
-        ps.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
-        ps.setString(6, "Admin"); // FIXME: 11/15/2022 last_updated_by is hardcoded. Make it dynamic.
-        ps.setInt(7,customer.getDivisionId());
-        ps.setInt(8, customer.getCustomerId());
+        ResultSet rs = ps.executeQuery();
 
-        ps.execute();
+        ObservableList<ReportByCountry> reportByCountries = FXCollections.observableArrayList();
+
+        while (rs.next()) {
+                String country = rs.getString("country");
+                Integer total = rs.getInt("total");
+
+                reportByCountries.add(new ReportByCountry(country,total));
+        }
+
+        return reportByCountries;
     }
 }

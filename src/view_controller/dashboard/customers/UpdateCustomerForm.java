@@ -16,11 +16,13 @@ import src.model.Country;
 import src.model.Customer;
 import src.model.FirstLevelDivision;
 import utils.Helper;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This form enables the user to update an existing customer.
+ */
 public class UpdateCustomerForm implements Initializable {
     @FXML private TextField customerIdField;
     @FXML private ComboBox<Country> countryDropdown;
@@ -32,14 +34,12 @@ public class UpdateCustomerForm implements Initializable {
     @FXML private Button submitButton;
     @FXML private Button cancelButton;
 
-    // FIXME: 11/15/2022 Repeated code - divisions, countries
     private ObservableList<FirstLevelDivision> divisions;
     private ObservableList<Country> countries;
     private Customer selectedCustomer = CustomersTabController.selectedCustomer;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // FIXME: 11/15/2022 Repeating code
         try {
             // QUERY: Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
             divisions = FirstLevelDivisionQueries.getAllDivisions();
@@ -79,8 +79,6 @@ public class UpdateCustomerForm implements Initializable {
         postalCodeField.setText(selectedCustomer.getPostalCode());
         phoneField.setText(selectedCustomer.getPhone());
 
-        //  FIXME prob. should be in a function?
-        // ================================================================================================
         // Queries DB for division information. Sets the default value of both combo boxes to the customer's country and region.
         Integer customerDivisionId = selectedCustomer.getDivisionId();
         FirstLevelDivision customerDivision = null;
@@ -106,15 +104,13 @@ public class UpdateCustomerForm implements Initializable {
 
         divisionDropdown.setValue(customerDivision); // FLD object param
         countryDropdown.setValue(customerCountry); // Country object param
-        // ================================================================================================
 
     }
 
     /**
-     * Updates the customer in the UI and database.
+     * Updates an existing customer.
      * @param event
      */
-    // FIXME: 11/15/2022 Repeating code
     public void submitForm(ActionEvent event) throws SQLException {
         // Alerts
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -123,7 +119,6 @@ public class UpdateCustomerForm implements Initializable {
         successAlert.setContentText("Customer successfully updated.");
 
         // Continuously Prompts user with an error message if any of the fields are empty
-        // FIXME: 11/15/2022 Add dropdowns to this error check
         if (nameField.getText().isEmpty() || addressField.getText().isEmpty() || phoneField.getText().isEmpty() ||
                 postalCodeField.getText().isEmpty() || divisionDropdown.getSelectionModel().isEmpty() || countryDropdown.getSelectionModel().isEmpty()) {
             errorAlert.show();
@@ -136,7 +131,6 @@ public class UpdateCustomerForm implements Initializable {
         String phone = phoneField.getText();
         Integer divisionId = divisionDropdown.getSelectionModel().getSelectedItem().getDivisionId();
 
-        // FIXME: 11/15/2022 only difference between updatecustomer and addcustomer
         selectedCustomer.setCustomerName(customerName);
         selectedCustomer.setAddress(address);
         selectedCustomer.setPostalCode(postalCode);

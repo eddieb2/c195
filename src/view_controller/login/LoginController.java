@@ -16,8 +16,15 @@ import java.net.URL;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 
+/**
+ * This form enables a user to login.
+ */
 public class LoginController implements Initializable {
     @FXML private Label welcomeLabel;
     @FXML private Button loginButton;
@@ -25,67 +32,6 @@ public class LoginController implements Initializable {
     @FXML private TextField userNameField;
     @FXML private TextField passwordField;
     private static boolean authenticationStatus = false;
-
-    public static boolean getAuthStatus() {
-        return authenticationStatus;
-    }
-
-    /*
-     * Retrieves the user input for the username field
-     * */
-    private String getUserName() {
-        return userNameField.getText();
-    }
-
-    /*
-    * Retrieves the user input for the password field
-    * */
-    private String getPassword() {
-        return passwordField.getText();
-    }
-
-    /*
-    * Redirects the user to the main screen after successful authentication
-    * */
-    private void redirect() throws IOException {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/view_controller/dashboard/dashboard.fxml"));
-        Parent root = loader.load();
-        Stage stage = (Stage) loginButton.getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("view_controller/dashboard");
-        stage.show();
-    }
-
-    /*
-    * Logs the user into the scheduling application
-    * */
-    public void onSubmit() {
-        try {
-            ResourceBundle rb = ResourceBundle.getBundle("lang/Nat", Locale.getDefault());
-
-            String username = getUserName();
-            String password = getPassword();
-
-            // Alerts
-            Alert loginSuccess = new Alert(Alert.AlertType.INFORMATION);
-            Alert loginFailed = new Alert(Alert.AlertType.ERROR);
-            loginSuccess.setContentText(rb.getString("Success"));
-            loginFailed.setContentText(rb.getString("Failed"));
-
-            authenticationStatus = UserQueries.authenticateUser(username,password);
-
-            if (authenticationStatus) {
-                redirect();
-            } else {
-                loginFailed.show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -106,27 +52,95 @@ public class LoginController implements Initializable {
             e.printStackTrace();
         }
     }
-}
 
-/*
-EXTRAS:
-* Add password encryption
-* Improve input validation
-* Change the login button text to "login" if necessary.
-* */
+    /**
+     * Retrieves the user input for the username field.
+     * @return
+     */
+    private String getUserName() {
+        return userNameField.getText();
+    }
+
+    /**
+     * Retrieves the user input for the password field.
+     * @return
+     */
+    private String getPassword() {
+        return passwordField.getText();
+    }
 
 
-/*
-
-*
-* WORKS
-*     @FXML private Stage stage;
-    @FXML private Scene scene;
-    @FXML private Parent root;
-    *
-*         Parent root = FXMLLoader.load(getClass().getResource("customers/add_customer_form.fxml"));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
+    /**
+     * Redirects the user to the main screen after successful authentication.
+     * @throws IOException
+     */
+    private void redirect() throws IOException {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/view_controller/dashboard/dashboard.fxml"));
+        Parent root = loader.load();
+        Stage stage = (Stage) loginButton.getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setTitle("Dashboard");
         stage.show();
-        * */
+    }
+
+
+    /**
+     * Logs the user into the scheduling application when the submit button is clicked.
+     */
+    public void onSubmit() {
+        try {
+            ResourceBundle rb = ResourceBundle.getBundle("lang/Nat", Locale.getDefault());
+
+            String username = getUserName();
+            String password = getPassword();
+
+            // Alerts
+            Alert loginSuccess = new Alert(Alert.AlertType.INFORMATION);
+            Alert loginFailed = new Alert(Alert.AlertType.ERROR);
+            loginSuccess.setContentText(rb.getString("Success"));
+            loginFailed.setContentText(rb.getString("Failed"));
+
+            authenticationStatus = UserQueries.authenticateUser(username,password);
+            loginTracker(authenticationStatus, username); // tracks login attempts
+
+            if (authenticationStatus) {
+                redirect();
+            } else {
+                loginFailed.show();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    /**
+     * Logs login attempts to login_activity.txt.
+     * @param authenticationStatus
+     * @param user
+     */
+    public void loginTracker(Boolean authenticationStatus, String user) {
+        Logger log = Logger.getLogger("login_activity.txt");
+
+        try {
+            FileHandler fh = new FileHandler("login_activity.txt", true);
+            SimpleFormatter sf = new SimpleFormatter();
+            fh.setFormatter(sf);
+            log.addHandler(fh);
+
+            if (authenticationStatus) {
+                log.log(Level.INFO, "Login successful. User: " + user);
+            } else {
+                log.log(Level.WARNING, "Login failed. User: " + user);
+            }
+
+            fh.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+}

@@ -1,24 +1,10 @@
 package src.model;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-/*
-Appointment_ID INT(10) (PK)
-Title VARCHAR(50)
-Description VARCHAR(50)
-Location VARCHAR(50)
-Type VARCHAR(50)
-Start DATETIME
-End DATETIME
-Create_Date DATETIME
-Created_By VARCHAR(50)
-Last_Update TIMESTAMP
-Last_Updated_By VARCHAR(50)
-Customer_ID INT(10) (FK)
-User_ID INT(10) (FK)
-Contact_ID INT(10) (FK)
-*/
+/**
+ * Model for Appointments
+ */
 public class Appointment {
     private Integer appointmentId;
     private String title;
@@ -27,16 +13,23 @@ public class Appointment {
     private String type;
     private LocalDateTime start;
     private LocalDateTime end;
-
-    private Timestamp createDate;
-    private String createdBy;
-    private Timestamp lastUpdate;
-    private String lastUpdatedBy;
-
     private Integer customerId;
     private Integer userId;
     private Integer contactId;
 
+    /**
+     * Used when retrieving data from the database.
+     * @param appointmentId
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     */
     public Appointment(Integer appointmentId, String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, Integer customerId, Integer userId, Integer contactId) {
         this.appointmentId = appointmentId;
         this.title = title;
@@ -50,6 +43,18 @@ public class Appointment {
         this.contactId = contactId;
     }
 
+    /**
+     * Used when inserting an appointment into the database. The database automatically creates an appointmentId.
+     * @param title
+     * @param description
+     * @param location
+     * @param type
+     * @param start
+     * @param end
+     * @param customerId
+     * @param userId
+     * @param contactId
+     */
     public Appointment(String title, String description, String location, String type, LocalDateTime start, LocalDateTime end, Integer customerId, Integer userId, Integer contactId) {
         this.title = title;
         this.description = description;
@@ -200,37 +205,5 @@ public class Appointment {
      */
     public void setContactId(Integer contactId) {
         this.contactId = contactId;
-    }
-
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public Timestamp getLastUpdate() {
-        return lastUpdate;
-    }
-
-    public void setLastUpdate(Timestamp lastUpdate) {
-        this.lastUpdate = lastUpdate;
-    }
-
-    public String getLastUpdatedBy() {
-        return lastUpdatedBy;
-    }
-
-    public void setLastUpdatedBy(String lastUpdatedBy) {
-        this.lastUpdatedBy = lastUpdatedBy;
     }
 }

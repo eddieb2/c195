@@ -3,13 +3,20 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import src.model.Contact;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Methods for retrieving Contact data from the database.
+ */
 public class ContactQueries {
 
+    /**
+     * Retrieves all contacts from the database.
+     * @return ObservableList<Contact>
+     * @throws SQLException
+     */
     public static ObservableList<Contact> getAllContacts() throws SQLException {
         ObservableList<Contact> contacts = FXCollections.observableArrayList();
 
@@ -29,6 +36,11 @@ public class ContactQueries {
         return contacts;
     }
 
+    /**
+     * Retrieves all contact ids from the database.
+     * @return ObservableList<Integer>
+     * @throws SQLException
+     */
     public static ObservableList<Integer> getAllContactIds() throws SQLException {
         ObservableList<Integer> contactIds = FXCollections.observableArrayList();
 

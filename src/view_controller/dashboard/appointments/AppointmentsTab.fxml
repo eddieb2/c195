@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
 <AnchorPane fx:id="appointmentsTab" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.appointments.AppointmentsTabController">
    <children>
-      <TableView fx:id="appointmentsTable" editable="true" prefHeight="800.0" prefWidth="1200.0">
+      <TableView fx:id="appointmentsTable" editable="true" layoutY="31.0" prefHeight="769.0" prefWidth="1200.0">
          <columns>
             <TableColumn fx:id="idCol" prefWidth="75.0" text="Apt. ID" />
             <TableColumn fx:id="titleCol" prefWidth="75.0" text="Title" />
             <TableColumn fx:id="descriptionCol" prefWidth="75.0" text="Description" />
             <TableColumn fx:id="locationCol" prefWidth="75.0" text="Location" />
             <TableColumn fx:id="typeCol" prefWidth="75.0" text="Type" />
-            <TableColumn fx:id="startCol" prefWidth="75.0" text="Start" />
-            <TableColumn fx:id="endCol" prefWidth="75.0" text="End" />
-<!--            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />-->
-<!--            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />-->
-<!--            <TableColumn fx:id="lastUpdateCol" prefWidth="89.0" text="Last Update" />-->
-<!--            <TableColumn fx:id="lastUpdatedByCol" prefWidth="82.0" text="Last Updated By" />-->
+            <TableColumn fx:id="startTimeCol" prefWidth="75.0" text="Start Time" />
+            <TableColumn fx:id="endTimeCol" prefWidth="75.0" text="End Time" />
+            <TableColumn fx:id="startDateCol" prefWidth="75.0" text="Start Date" />
+            <TableColumn fx:id="endDateCol" prefWidth="75.0" text="End Date" />
             <TableColumn fx:id="customerIdCol" prefWidth="75.0" text="Customer ID" />
             <TableColumn fx:id="userIdCol" prefWidth="75.0" text="User ID" />
             <TableColumn fx:id="contactIdCol" prefWidth="75.0" text="Contact ID" />
@@ -27,5 +27,9 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
+      <Label layoutX="874.0" layoutY="6.0" prefHeight="17.0" prefWidth="50.0" text="View by:" />
+      <RadioButton fx:id="monthRadioButton" layoutX="947.0" layoutY="6.0" mnemonicParsing="false" text="Month" />
+      <RadioButton fx:id="weekRadioButton" layoutX="1021.0" layoutY="6.0" mnemonicParsing="false" text="Week" />
+      <RadioButton fx:id="allRadioButton" layoutX="1094.0" layoutY="6.0" mnemonicParsing="false" selected="true" text="All" />
    </children>
 </AnchorPane>

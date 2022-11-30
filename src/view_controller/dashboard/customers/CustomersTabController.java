@@ -9,25 +9,22 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import src.model.Customer;
-
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ResourceBundle;
 
+/**
+ *  Displays all customers. Enables the user to add, update, or delete customers.
+ */
 public class CustomersTabController implements Initializable {
     @FXML private AnchorPane customersTab;
-    @FXML private TableView<Customer> customersTable; // FIXME: 11/14/2022  MIGHT BREAK
+    @FXML private TableView<Customer> customersTable;
     @FXML private TableColumn<Customer,Integer> idCol;
     @FXML private TableColumn<Customer,String> nameCol;
     @FXML private TableColumn<Customer,String> addressCol;
     @FXML private TableColumn<Customer,String> postalCodeCol;
     @FXML private TableColumn<Customer,String> phoneCol;
     @FXML private TableColumn<Customer,Integer> divisionIdCol;
-    @FXML private TableColumn<Customer,Timestamp> createDateCol;
-    @FXML private TableColumn<Customer,String> createdByCol;
-    @FXML private TableColumn<Customer,Timestamp> lastUpdateCol;
-    @FXML private TableColumn<Customer,String> lastUpdatedByCol;
 
     public static ObservableList<Customer> customers;
     public static Customer selectedCustomer;
@@ -41,10 +38,6 @@ public class CustomersTabController implements Initializable {
         postalCodeCol.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneCol.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("divisionId"));
-        createDateCol.setCellValueFactory(new PropertyValueFactory<>("createDate"));
-        createdByCol.setCellValueFactory(new PropertyValueFactory<>("createdBy"));
-        lastUpdateCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdate"));
-        lastUpdatedByCol.setCellValueFactory(new PropertyValueFactory<>("lastUpdatedBy"));
 
         customersTable.getSelectionModel().selectedItemProperty().addListener((observableValue, part, t1) -> {
             selectedCustomer = customersTable.getSelectionModel().getSelectedItem();

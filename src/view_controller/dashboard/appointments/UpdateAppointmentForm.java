@@ -12,7 +12,6 @@ import src.model.Customer;
 import src.model.User;
 import utils.Helper;
 import view_controller.dashboard.DashboardController;
-
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -20,6 +19,9 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/**
+ * This form enables the user to update an existing appointment.
+ */
 public class UpdateAppointmentForm implements Initializable {
 
     @FXML private Button submitButton;
@@ -37,12 +39,13 @@ public class UpdateAppointmentForm implements Initializable {
     @FXML private DatePicker endDatePicker;
     @FXML private DatePicker startDatePicker;
 
-
     private Appointment selectedAppointment = AppointmentsTabController.selectedAppointment;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         AppointmentsTabController.populateComboBoxes(customerIdComboBox, userIdComboBox, contactIdComboBox, startTimeField, endTimeField);
+        Helper.formatCalendar(startDatePicker); // disables past dates and disables weekends
+        Helper.formatCalendar(endDatePicker); // disables past dates and disables weekends
 
         try {
             loadAppointment();
@@ -51,6 +54,9 @@ public class UpdateAppointmentForm implements Initializable {
         }
     }
 
+    /**
+     * Loads the selected appointment's information into the text boxes and combo boxes.
+     */
     public void loadAppointment() {
         appointmentIdField.setText(selectedAppointment.getAppointmentId().toString());
         titleField.setText(selectedAppointment.getTitle());
@@ -98,12 +104,21 @@ public class UpdateAppointmentForm implements Initializable {
         endDatePicker.setValue(endDate);
     }
 
+    /**
+     * Updates an existing appointment.
+     * @param event
+     * @throws SQLException
+     */
     public void submitForm(ActionEvent event) throws SQLException {
         // Alerts
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setContentText("One or more fields are blank. All fields must be complete.");
         Alert successAlert = new Alert(Alert.AlertType.INFORMATION);
         successAlert.setContentText("Appointment successfully created.");
+        Alert timeDateError = new Alert(Alert.AlertType.ERROR);
+        timeDateError.setContentText("Start date/time needs to be before end date/time.");
+        Alert schedulingError = new Alert(Alert.AlertType.ERROR);
+        Appointment overlappingAppointment = null;
 
         // Continuously Prompts user with an error message if any of the fields are empty
         if (titleField.getText().isEmpty() || descriptionField.getText().isEmpty() || locationField.getText().isEmpty() ||
@@ -111,6 +126,12 @@ public class UpdateAppointmentForm implements Initializable {
                 startDatePicker.getValue() == null || endDatePicker.getValue() == null || customerIdComboBox.getSelectionModel().isEmpty() ||
                 userIdComboBox.getSelectionModel().isEmpty() || contactIdComboBox.getSelectionModel().isEmpty()) {
             errorAlert.show();
+            return;
+        }
+
+        // Dates and time guard clause
+        if (endDatePicker.getValue().isBefore(startDatePicker.getValue()) || endTimeField.getValue().isBefore(startTimeField.getValue()) || endTimeField.getValue().equals(startTimeField.getValue())) {
+            timeDateError.show();
             return;
         }
 
@@ -135,6 +156,25 @@ public class UpdateAppointmentForm implements Initializable {
         selectedAppointment.setUserId(user.getUserId());
         selectedAppointment.setContactId(contact.getContactId());
 
+        // Check for overlapping appointments
+        for (Appointment scheduledAppointment : AppointmentQueries.getAllAppointments()) {
+
+            // This if-statement allows us to update the selected appointment. Otherwise, the program will check the selected appointment against itself.
+            if (scheduledAppointment.getAppointmentId() != selectedAppointment.getAppointmentId()){
+
+                if (scheduledAppointment.getStart().isBefore(selectedAppointment.getEnd()) && selectedAppointment.getStart().isBefore(scheduledAppointment.getEnd())) {
+                    overlappingAppointment = scheduledAppointment; // used to display the overlapping apt
+                    schedulingError.setContentText("Appointment #" + overlappingAppointment.getAppointmentId() + " is scheduled between " + overlappingAppointment.getStart().toLocalTime() + " - " + overlappingAppointment.getEnd().toLocalTime() + ". Please pick another date and time slot.");
+                    schedulingError.show();
+
+                    return;
+                }
+
+            }
+
+        }
+
+        // Updates the appointment
         AppointmentQueries.updateAppointment(selectedAppointment);
 
         // RELOAD MAIN DATA ON DASHBOARD AFTER SUBMISSION AND CLOSE WINDOW
@@ -145,6 +185,10 @@ public class UpdateAppointmentForm implements Initializable {
         Helper.closeWindow(submitButton);
     }
 
+    /**
+     * Closes the current form.
+     * @param event
+     */
     public void closeForm(ActionEvent event) {
         Helper.closeWindow(cancelButton);
     }

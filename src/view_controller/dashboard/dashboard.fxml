@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="dashboard" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.DashboardController">
+<AnchorPane fx:id="dashboard" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view_controller.dashboard.DashboardController">
    <children>
       <TabPane layoutX="206.0" layoutY="71.0" prefHeight="729.0" prefWidth="1200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="71.0">
         <tabs>
           <Tab text="Customers">
                <content>
-                  <fx:include fx:id="customersTab" source="customers/customers_tab.fxml" />
+                  <fx:include fx:id="customersTab" source="customers/CustomersTab.fxml" />
                </content>
             </Tab>
           <Tab text="Appointments">
                <content>
-                  <fx:include fx:id="appointmentsTab" source="appointments/appointments.fxml" />
+                  <fx:include fx:id="appointmentsTab" source="appointments/AppointmentsTab.fxml" />
                </content>
             </Tab>
         </tabs>
@@ -26,12 +29,13 @@
             <Button fx:id="deleteCustomerButton" mnemonicParsing="false" onAction="#deleteCustomer" prefHeight="25.0" prefWidth="116.0" text="Delete Customer" />
          </buttons>
       </ButtonBar>
-      <ButtonBar layoutX="737.0" layoutY="14.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
+      <ButtonBar layoutX="755.0" layoutY="15.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="388.0">
          <buttons>
             <Button fx:id="addAptButton" mnemonicParsing="false" onAction="#addAppointmentForm" prefHeight="25.0" prefWidth="116.0" text="Add Apt." />
             <Button fx:id="updateAptButton" mnemonicParsing="false" onAction="#updateAppointmentForm" prefHeight="25.0" prefWidth="116.0" text="Update Apt." />
             <Button fx:id="deleteAptButton" mnemonicParsing="false" onAction="#deleteAppointment" prefHeight="25.0" prefWidth="116.0" text="Delete Apt." />
          </buttons>
       </ButtonBar>
+      <Button fx:id="reportButton" layoutX="559.0" layoutY="22.0" mnemonicParsing="false"  onAction="#openReports" prefHeight="25.0" prefWidth="83.0" text="Reports" />
    </children>
 </AnchorPane>

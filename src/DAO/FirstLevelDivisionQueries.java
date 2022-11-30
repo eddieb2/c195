@@ -3,13 +3,20 @@ package DAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import src.model.FirstLevelDivision;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Methods for retrieving FirstLevelDivision data from the database.
+ */
 public class FirstLevelDivisionQueries {
 
+    /**
+     * Retrieves all FirstLevelDivisions from the database.
+     * @return ObservableList<FirstLevelDivision>
+     * @throws SQLException
+     */
     public static ObservableList<FirstLevelDivision> getAllDivisions() throws SQLException {
         ObservableList<FirstLevelDivision> divisions = FXCollections.observableArrayList();
 
@@ -29,6 +36,12 @@ public class FirstLevelDivisionQueries {
         return divisions;
     }
 
+    /**
+     * Retrieves a specified FirstLevelDivision by id.
+     * @param divisionId
+     * @return FirstLevelDivision
+     * @throws SQLException
+     */
     public static FirstLevelDivision getDivisionById(Integer divisionId) throws SQLException {
         FirstLevelDivision division = new FirstLevelDivision(divisionId);
 

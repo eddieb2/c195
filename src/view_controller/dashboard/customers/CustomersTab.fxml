@@ -14,10 +14,6 @@
             <TableColumn fx:id="postalCodeCol" prefWidth="75.0" text="Postal Code" />
             <TableColumn fx:id="phoneCol" prefWidth="75.0" text="Phone" />
             <TableColumn fx:id="divisionIdCol" prefWidth="75.0" text="Division ID" />
-            <TableColumn fx:id="createDateCol" prefWidth="75.0" text="Create Date" />
-            <TableColumn fx:id="createdByCol" prefWidth="75.0" text="Created By" />
-            <TableColumn fx:id="lastUpdateCol" prefWidth="75.0" text="Last Update" />
-            <TableColumn fx:id="lastUpdatedByCol" prefWidth="75.0" text="Last Updated By" />
          </columns>
          <columnResizePolicy>
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

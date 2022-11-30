@@ -15,11 +15,14 @@ import src.model.Country;
 import src.model.Customer;
 import src.model.FirstLevelDivision;
 import utils.Helper;
-
+import view_controller.dashboard.DashboardController;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/**
+ * This form enables the user to add a new customer.
+ */
 public class AddCustomerForm implements Initializable {
     @FXML private ComboBox<Country> countryDropdown;
     @FXML private ComboBox<FirstLevelDivision> divisionDropdown;
@@ -30,13 +33,16 @@ public class AddCustomerForm implements Initializable {
     @FXML private Button submitButton;
     @FXML private Button cancelButton;
 
-    // FIXME: 11/15/2022 Repeated code
     private ObservableList<FirstLevelDivision> divisions;
     private ObservableList<Country> countries;
 
+    /**
+     * Contains a lambda expression -- used to change the divisionDropdown based on what country is selected.
+     * @param url
+     * @param resourceBundle
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // FIXME: 11/15/2022 Repeated code
         try {
             // QUERY: Lists to hold the objects for the dropdown boxes -- the name properties are gathered below.
             divisions = FirstLevelDivisionQueries.getAllDivisions();
@@ -59,10 +65,11 @@ public class AddCustomerForm implements Initializable {
         }
     }
 
+
     /**
-     *
+     * Adds a new customer to the database.
+     * @throws SQLException
      */
-    // FIXME: 11/15/2022 Repeating code
     public void submitForm() throws SQLException {
         // Alerts
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
@@ -82,7 +89,6 @@ public class AddCustomerForm implements Initializable {
         String address = addressField.getText();
         String postalCode = postalCodeField.getText();
         String phone = phoneField.getText();
-        System.out.println( divisionDropdown.getSelectionModel());
         Integer divisionId = divisionDropdown.getSelectionModel().getSelectedItem().getDivisionId();
 
         Customer newCustomer = new Customer(customerName, address, postalCode, phone, divisionId);
@@ -91,6 +97,8 @@ public class AddCustomerForm implements Initializable {
         // RELOAD MAIN DATA ON DASHBOARD AFTER SUBMISSION AND CLOSE WINDOW
         ObservableList<Customer> newCustomerList = CustomerQueries.getAllCustomers();
         CustomersTabController.customers.setAll(newCustomerList);
+
+        DashboardController.customers = CustomerQueries.getAllCustomers();
 
         successAlert.show();
         Helper.closeWindow(submitButton);
@@ -102,7 +110,4 @@ public class AddCustomerForm implements Initializable {
     public void closeForm() {
         Helper.closeWindow(cancelButton);
     }
-
-
-
 }
