@@ -1,0 +1,74 @@
+Nov 28, 2022 3:57:09 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: a
+Nov 28, 2022 4:24:44 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:27:31 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:29:03 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:30:07 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:39:21 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: a
+Nov 28, 2022 4:44:39 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:47:36 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:51:53 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:53:32 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 4:54:28 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 5:00:00 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 5:00:53 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 28, 2022 5:05:45 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 29, 2022 8:12:13 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:21:01 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:23:57 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:33:40 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:35:14 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 6:35:19 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:39:25 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 6:39:29 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:45:52 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:49:31 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:50:09 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 6:50:13 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:56:36 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 6:56:40 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 6:58:41 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 6:58:45 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 7:04:34 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 7:05:07 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 7:06:15 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 7:06:19 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 7:11:00 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
+Nov 30, 2022 7:12:57 PM view_controller.login.LoginController loginTracker
+WARNING: Login failed. User: admin
+Nov 30, 2022 7:13:02 PM view_controller.login.LoginController loginTracker
+INFO: Login successful. User: admin
