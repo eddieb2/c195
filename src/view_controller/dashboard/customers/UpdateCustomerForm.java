@@ -16,6 +16,8 @@ import src.model.Country;
 import src.model.Customer;
 import src.model.FirstLevelDivision;
 import utils.Helper;
+import view_controller.dashboard.DashboardController;
+
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -141,6 +143,8 @@ public class UpdateCustomerForm implements Initializable {
         // RELOAD MAIN DATA ON DASHBOARD AFTER SUBMISSION AND CLOSE WINDOW
         ObservableList<Customer> newCustomerList = CustomerQueries.getAllCustomers();
         CustomersTabController.customers.setAll(newCustomerList);
+
+        DashboardController.customers = CustomerQueries.getAllCustomers();
 
         successAlert.show();
         Helper.closeWindow(submitButton);
